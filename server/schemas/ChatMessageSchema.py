@@ -1,11 +1,11 @@
 
 from dataclasses import dataclass
 
-from server.data_classes import User
+from server.schemas import User
 
 
 @dataclass
-class ChatMessage:
+class ChatMessageSchema:
 	id:int
 	content:str
 	author: User

@@ -2,11 +2,11 @@ from dataclasses import dataclass, field
 from datetime import date
 from typing import List
 
-from server.data_classes import User
+from server.schemas import User
 
 
 @dataclass
-class Chat:
+class ChatSchema:
 	id:int
 	users: List[User] = field(default_factory=list) # type: ignore
 	created_at: date
