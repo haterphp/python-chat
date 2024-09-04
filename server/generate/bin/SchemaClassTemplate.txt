@@ -1,0 +1,10 @@
+from dataclasses import dataclass
+
+
+@dataclass
+class {0}:
+	def __init__(self) -> None:
+		self.hello = '{1}'
+
+	def greeting(self) -> None:
+		print(self.hello)

@@ -1,0 +1,11 @@
+{
+	"UserSchema": {
+		"id": { "type": "Integer", "primaryKey": true },
+		"username": { "type": "String" },
+		"password": { "type": "String" }
+	},
+	"CreateUserSchema": {
+		"username": { "type": "String" },
+		"password": { "type": "String" }
+	}
+}
