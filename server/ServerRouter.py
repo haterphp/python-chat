@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from fastapi.responses import FileResponse
 
 from env import STATIC_HTML_FILEPATH, API_PREFIX
+from server.enums.ChatTypeEnum import ChatTypeEnum
 from server.route_actions import GetAllChatsAction, IRouteAction
 
 class ServerRouter:
@@ -18,7 +19,6 @@ class ServerRouter:
 		self.router.add_api_route('{catchall:path}', self.home_endpoint, methods=["GET"])
 
 	# Application routes region
-
 	def home_endpoint(self) -> FileResponse:
 		return FileResponse(STATIC_HTML_FILEPATH)
 
@@ -29,5 +29,4 @@ class ServerRouter:
 				path=route_path,
 				endpoint=route.action
 			)
-
 	# endregion

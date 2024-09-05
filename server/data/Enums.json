@@ -1,0 +1,13 @@
+{
+	"ChatTypeEnum": {
+		"variants": {
+			"SINGLE": "single",
+			"GROUP": "group",
+			"CHANNEL": "channel",
+			"TEST": 1
+		},
+		"ranges": {
+			"GROUP_CHAT_TYPES": ["GROUP", "CHANNEL"]
+		}
+	}
+}

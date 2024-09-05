@@ -3,6 +3,7 @@ build/
 venv/
 
 server/schemas
+server/enums
 
 *.pyc
 *.db
