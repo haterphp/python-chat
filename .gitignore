@@ -2,6 +2,7 @@ node_modules/
 build/
 venv/
 
+server/models
 server/schemas
 server/enums
 

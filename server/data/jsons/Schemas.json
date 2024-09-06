@@ -1,0 +1,17 @@
+{
+	"UserSchema": {
+		"attrs": {
+			"id": { "type": "Integer", "primarKey": true },
+			"name": { "type": "String" },
+			"email": { "type": "String", "searchByField": true },
+			"password": { "type": "String" }
+		},
+		"model": {"name": "UserModel"}
+	},
+	"CreateUserSchema": {
+		"attrs": {
+			"email": {"type": "String"},
+			"password": {"type": "String"}
+		}
+	}
+}

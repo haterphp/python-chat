@@ -3,8 +3,7 @@
 		"variants": {
 			"SINGLE": "single",
 			"GROUP": "group",
-			"CHANNEL": "channel",
-			"TEST": 1
+			"CHANNEL": "channel"
 		},
 		"ranges": {
 			"GROUP_CHAT_TYPES": ["GROUP", "CHANNEL"]
