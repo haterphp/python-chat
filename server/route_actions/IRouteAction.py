@@ -1,12 +1,17 @@
 from typing import List
-from fastapi import Request
 from fastapi.responses import JSONResponse
 
 
 class IRouteAction():
 
-	def router_path(self) -> List[str]:
+	def route_path(self) -> List[str]:
 		raise NotImplementedError('Method "route_path" must be Implemented')
 
-	def action(self, request: Request) -> JSONResponse:
+	def route_method(self) -> List[str]:
+		raise NotImplementedError('Method "method" must be Implemented')
+
+	def action(self, **kwargs) -> JSONResponse:
 		raise NotImplementedError('Method "action" must be Implemented')
+
+	def response_model(self):
+		return None

@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from fastapi.responses import FileResponse
 
 from env import STATIC_HTML_FILEPATH, API_PREFIX
-from server.route_actions import GetAllChatsAction, IRouteAction
+from server.route_actions import GetAllChatsAction, CreateNewChatAction, IRouteAction
 
 class ServerRouter:
 
@@ -12,7 +12,8 @@ class ServerRouter:
 
 		# Define routes
 		self.__defineRoutes([
-		GetAllChatsAction()
+			GetAllChatsAction(),
+			CreateNewChatAction()
 		])
 
 		self.router.add_api_route('{catchall:path}', self.home_endpoint, methods=["GET"])
@@ -23,9 +24,11 @@ class ServerRouter:
 
 	def __defineRoutes(self, routes: List[IRouteAction]) -> None:
 		for route in routes:
-			route_path = API_PREFIX.format('/'.join(route.router_path()))
+			route_path = API_PREFIX.format('/'.join(route.route_path()))
 			self.router.add_api_route(
+				methods=route.route_method(),
 				path=route_path,
-				endpoint=route.action
+				endpoint=route.action,
+				response_model=route.response_model(),
 			)
 	# endregion
