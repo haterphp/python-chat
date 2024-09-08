@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from server.data.chats import ChatModel, ChatCreateSchema
+from server.components.chats import ChatModel, CreateChatSchema
 
 class ChatService():
 	def __init__(self, db: Session) -> None:
@@ -9,7 +9,7 @@ class ChatService():
 	def get_all_chats(self) -> list[ChatModel]:
 		return self.__db.query(ChatModel).all()
 
-	def create_chat(self, port: ChatCreateSchema) -> ChatModel:
+	def create_chat(self, port: CreateChatSchema) -> ChatModel:
 		chat = ChatModel(name=port.name)
 
 		self.__db.add(chat)

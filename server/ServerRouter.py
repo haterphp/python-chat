@@ -24,11 +24,12 @@ class ServerRouter:
 
 	def __defineRoutes(self, routes: List[IRouteAction]) -> None:
 		for route in routes:
-			route_path = API_PREFIX.format('/'.join(route.route_path()))
+			route_path = API_PREFIX.format('/'.join(route.route_path))
 			self.router.add_api_route(
-				methods=route.route_method(),
+				methods=route.route_method,
 				path=route_path,
 				endpoint=route.action,
-				response_model=route.response_model(),
+				response_model=route.response_model,
+				status_code=route.route_status_code
 			)
 	# endregion

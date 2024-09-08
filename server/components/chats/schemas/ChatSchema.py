@@ -6,6 +6,4 @@ class ChatSchema(BaseModel):
 
 	class Config:
 		orm_mode = True
-
-class ChatCreateSchema(BaseModel):
-	name: str
+		from_attributes = True
