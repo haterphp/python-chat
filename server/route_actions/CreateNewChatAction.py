@@ -1,7 +1,7 @@
 from typing import List
 
 from fastapi.params import Depends
-from database import get_db
+from server.database import get_db
 from sqlalchemy.orm import Session
 
 from fastapi.responses import JSONResponse

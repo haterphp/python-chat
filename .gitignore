@@ -1,6 +1,22 @@
+# Develop dependencies
 node_modules/
 build/
+dist/
 venv/
 
+# Python build files
 *.pyc
+
+# SQL Light Database files
 *.db
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

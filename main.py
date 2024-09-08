@@ -3,14 +3,15 @@
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from database import Base, engine
+from env import STATIC_ASSETS_PATH, STATIC_ASSETS_ROUTEPATH
+from server.database import Base, engine
 
 from server.ServerRouter import ServerRouter
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="view/build/static"), name="static")
+app.mount(STATIC_ASSETS_ROUTEPATH, StaticFiles(directory=STATIC_ASSETS_PATH), name="static")
 
 if __name__ == "main":
 	serverRouter = ServerRouter()
