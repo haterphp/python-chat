@@ -1,13 +1,12 @@
 import { lazy, Suspense } from "react"
-import {loadChatLayout} from '@/components/layout/Layout'
+import Layout from '@/components/layout/Layout.component'
 
-const LayoutLoader = lazy(() => import('@/components/layout/LayoutLoader.tsx'))
-const Layout = lazy(() => loadChatLayout(import('@/components/layout/Layout.tsx')))
+const LoaderScreen = lazy(() => import('@/components/loader/LoaderScreen.component'))
 
 function App() {
 	return (
 		<>
-			<Suspense fallback={<LayoutLoader />}>
+			<Suspense fallback={<LoaderScreen height="100vh" />}>
 				<Layout/>
 			</Suspense>
 		</>
