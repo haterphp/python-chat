@@ -1,5 +1,5 @@
 import { GetAllChatRequests } from "@/data/chats/requests/GetAllChatsRequest"
-import { lazy, Suspense, useMemo } from "react"
+import { lazy, Suspense } from "react"
 import { IMenuProps } from "./Menu.props"
 
 const LoaderScreen = lazy(() => import('@/components/loader/LoaderScreen.component'))

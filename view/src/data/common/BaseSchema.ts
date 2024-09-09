@@ -1,5 +1,4 @@
-import { Exclude, Expose } from "class-transformer";
-import { IsInt, validate } from "class-validator";
+import { validate } from "class-validator";
 
 export class BaseSchema<Identifier> {
 	protected readonly _id: Identifier

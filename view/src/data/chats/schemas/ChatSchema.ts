@@ -1,6 +1,4 @@
 import { BaseSchema } from "@/data/common/BaseSchema";
-import { Exclude, Expose } from "class-transformer";
-import { IsString } from "class-validator";
 
 interface ICreateChatSchema {
 	id: number
