@@ -1,4 +1,4 @@
-type ISubsriber = (payload: unknown) => void
+type ISubsriber = (payload?: any) => void
 
 class EventEmitter {
 	private __subscribers: Array<[string, ISubsriber]>
@@ -17,7 +17,7 @@ class EventEmitter {
 		this.__subscribers = subscribersForRemove
 	}
 
-	public omit(subscriberName: string, payload: unknown): void {
+	public emit(subscriberName: string, payload?: any): void {
 		const subscriberWhoRecieveUpdate = this.__subscribers.filter(([name]) => subscriberName == name)
 
 		for (const [_, subscriberCallback] of subscriberWhoRecieveUpdate) {

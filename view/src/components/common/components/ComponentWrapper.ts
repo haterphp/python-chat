@@ -1,17 +1,5 @@
-import { DataReasons, IComponentPresenterProps, IDataComponentFabric, SendDataTransactionFn } from "./DataComponent"
-import { WrappedComponentReturns } from "./Component"
-
-
-interface IComponentPresenter<TData = unknown, TListenCallbackProps = any> {
-	sendDataTransaction: SendDataTransactionFn<TData | TData[]>
-	listenDataTransaction: SendDataTransactionFn<TListenCallbackProps>
-	getRenderComponent(payload: IComponentPresenterProps): WrappedComponentReturns
-
-	// Not supported
-	bindListeners?(): void
-	unbindListeners?(): void
-	// Not supported
-}
+import { DataReasons, IDataComponentFabric } from "./DataComponent"
+import { WrappedComponentReturns, IComponentProps, IComponentPresenter } from "./Component"
 
 class ComponentWrapper<TData = unknown> {
 	private __fabric: IComponentPresenter<TData>
@@ -38,19 +26,22 @@ class ComponentWrapper<TData = unknown> {
 	 * Life cycle hooks
 	 */
 
-	private __componentMount(data: TData[]): IComponentPresenterProps['mount']  {
+	private __componentMount(data: TData[]): IComponentProps['mount']  {
 		return () => {
-			console.log('DEBUG: mount')
 			this.__fabric.sendDataTransaction(data, DataReasons.SET)
+
+			if (this.__fabric.bindListeners)
+				this.__fabric.bindListeners()
 
 			if (this.__dataFabric.subscribeSocket)
 				this.__dataFabric.subscribeSocket(this.__fabric.sendDataTransaction.bind(this.__fabric))
 		}
 	}
 
-	private __componentUnmount(): IComponentPresenterProps['unmount']  {
+	private __componentUnmount(): IComponentProps['unmount']  {
 		return () => {
-			console.log('DEBUG: unmount')
+			if (this.__fabric.unbindListeners)
+				this.__fabric.unbindListeners()
 
 			if (this.__dataFabric.unsubscribeSocket)
 				this.__dataFabric.unsubscribeSocket()

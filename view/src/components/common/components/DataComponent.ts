@@ -8,11 +8,6 @@ enum DataReasons {
 type SendDataTransactionFn<TData> = (data: TData | TData[], reason: DataReasons) => void
 type ListenDataTransactionFn<TListenCallbackProps> = (props: TListenCallbackProps) => void
 
-interface IComponentPresenterProps {
-	mount: () => void
-	unmount: () => void
-}
-
 interface IDataComponentFabric<TData> {
 	getData(): Promise<TData[]>
 
@@ -22,7 +17,6 @@ interface IDataComponentFabric<TData> {
 
 export {
 	DataReasons,
-	type IComponentPresenterProps,
 	type IDataComponentFabric,
 	type SendDataTransactionFn,
 	type ListenDataTransactionFn

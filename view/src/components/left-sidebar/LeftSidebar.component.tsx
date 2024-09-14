@@ -1,4 +1,4 @@
-import Menu from "../menu/Menu.wrapper";
+import ContactsList from "../contacts/contact-list/ContactsList.wrapper";
 import { ILeftSidebarProps } from "./LeftSidebar.props";
 
 export default function LeftSidebar(props: ILeftSidebarProps) {
@@ -6,7 +6,7 @@ export default function LeftSidebar(props: ILeftSidebarProps) {
 
 	return (
 		<div className="left-sidebar" style={{ maxWidth: width }}>
-			<Menu/>
+			<ContactsList/>
 		</div>
 	)
 }
