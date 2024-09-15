@@ -1,17 +1,17 @@
-type ISubsriber = (payload?: any) => void
+type ISubsriber<TPayload> = (payload?: TPayload) => void
 
 class EventEmitter {
-	private __subscribers: Array<[string, ISubsriber]>
+	private __subscribers: Array<[string, ISubsriber<never>]>
 
 	constructor () {
 		this.__subscribers = []
 	}
 
-	public subscribe(subscriberName: string, subscriberCallback: ISubsriber): void {
+	public subscribe<TPayload>(subscriberName: string, subscriberCallback: ISubsriber<TPayload>): void {
 		this.__subscribers.push([subscriberName, subscriberCallback])
 	}
 
-	public unsubscribe(subscriberName: string, subscriberCallback: ISubsriber): void {
+	public unsubscribe<TPayload>(subscriberName: string, subscriberCallback: ISubsriber<TPayload>): void {
 		const subscribersForRemove = this.__subscribers.filter(([name, callback]) => 	subscriberName != name
 																						&& subscriberCallback != callback)
 		this.__subscribers = subscribersForRemove

@@ -1,0 +1,34 @@
+$contact-list-color-hover: #292929;
+$contact-list-color-active: #292929;
+
+$contact-list-background-hover: #f7f7f7;
+$contact-list-background-active: $color-primary;
+
+.contacts-list {
+	width: 100%;
+	height: 100%;
+
+	padding-inline: 5px;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.contacts-list-item {
+	width: 100%;
+	padding: 15px 25px;
+	border-radius: .5rem;
+	cursor: pointer;
+
+	transition: backgroundColor .15s ease;
+}
+
+.contacts-list-item:hover {
+	color: $contact-list-color-hover;
+	background-color: $contact-list-background-hover;
+}
+
+.contacts-list-item.active {
+	color: $contact-list-color-active;
+	background-color: $contact-list-background-active;
+}

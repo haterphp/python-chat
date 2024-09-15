@@ -1,6 +1,9 @@
 import { validateOrReject } from 'class-validator'
 
-export abstract class AbstractRequest<TPort extends object = {}, TResponse extends object | void = void> {
+
+export type AbstractRequestPort = Record<string, string | number | boolean>
+
+export abstract class AbstractRequest<TPort extends AbstractRequestPort, TResponse> {
 	protected abstract _action(port?: TPort): Promise<TResponse>
 
 	public async execute(port?: TPort): Promise<TResponse> {
