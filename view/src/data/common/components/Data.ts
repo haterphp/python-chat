@@ -8,12 +8,10 @@ export abstract class AbstractComponentData<
 > implements IClassLifeCycle {
 
 	public mount(state: TState): void {
-		console.log('data: mount')
 		if (this._subscirbeSockets) this._subscirbeSockets(state)
 	}
 
 	public unmount(): void {
-		console.log('data: unmount')
 		if (this._unsubscirbeSockets) this._unsubscirbeSockets()
 	}
 

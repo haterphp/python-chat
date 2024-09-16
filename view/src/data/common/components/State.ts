@@ -1,6 +1,11 @@
 import { EventEmitter, ISubsriber } from "../EventEmitter"
 import { IClassLifeCycle } from "./Lifecycle"
 
+export const STATE_HAS_CHANGED_EVENT_KEY = 'state_changed'
+export const STATE_KEY_HAS_CHANGED_EVENT_KEY = (key: string) => `key_${key}_updated`
+
+export type StateValueFabric<TValue> = (value: TValue) => TValue
+
 export abstract class AbstractComponentState<TState extends object> implements IClassLifeCycle {
 	private __state: TState
 
@@ -19,36 +24,24 @@ export abstract class AbstractComponentState<TState extends object> implements I
 		return this.__state[key]
 	}
 
-	public setStateValue(key: keyof TState, value: TState[typeof key]) {
-		this.__state[key] = value
-		this._eventEmmitter.emit(`key_${key.toString()}_updated`, this.__state[key])
+	public subscribeToStateChanges(callback: ISubsriber<TState>): void {
+		this._eventEmmitter.subscribe(STATE_HAS_CHANGED_EVENT_KEY, callback)
+	}
+
+	public subscribeToStateKeyChanges(key: keyof TState, callback: ISubsriber<TState[typeof key]>): void {
+		this._eventEmmitter.subscribe(STATE_KEY_HAS_CHANGED_EVENT_KEY(key.toString()), callback)
 	}
 
 	public mount(): void {
-		console.log('state: mount')
-
-		const listeners = this._getDataListeners()
-
-		if (listeners !== undefined) {
-			for (const [eventName, subscriberCallback] of listeners) {
-				this._eventEmmitter.subscribe(eventName, subscriberCallback)
-			}
-		}
+		this._eventEmmitter.emit(STATE_HAS_CHANGED_EVENT_KEY, this.__state)
 	}
 
 	public unmount(): void {
-		console.log('state: unmount')
-
-		const listeners = this._getDataListeners()
-
-		if (listeners !== undefined) {
-			for (const [eventName, subscriberCallback] of listeners) {
-				this._eventEmmitter.unsubscribe(eventName, subscriberCallback)
-			}
-		}
+		this._eventEmmitter.unsubscribeAllChilds()
 	}
 
-	protected _getDataListeners(): [string, ISubsriber<unknown>][] {
-		return []
+	protected _setStateValue(key: keyof TState, value: StateValueFabric<TState[typeof key]>) {
+		this.__state[key] = value(this.__state[key])
+		this._eventEmmitter.emit(STATE_KEY_HAS_CHANGED_EVENT_KEY(key.toString()), this.__state[key])
 	}
 }
