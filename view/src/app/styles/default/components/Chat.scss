@@ -1,0 +1,45 @@
+$contact-list-color-hover: #292929;
+$contact-list-color-active: #292929;
+
+$contact-list-background-hover: #f7f7f7;
+$contact-list-background-active: $color-primary;
+
+// ------------ CHAT LIST ------------ //
+
+.chats_list {
+	width: 100%;
+	height: 100%;
+
+	padding-inline: 5px;
+
+	display: flex;
+	flex-direction: column;
+
+	&__item {
+		width: 100%;
+		padding: 15px 25px;
+		border-radius: .5rem;
+		cursor: pointer;
+
+		transition: backgroundColor .15s ease;
+
+		display: flex;
+		flex-direction: column;
+
+		&:not(&-skeleton):hover {
+			color: $contact-list-color-hover;
+			background-color: $contact-list-background-hover;
+		}
+
+		&-active {
+			color: $contact-list-color-active;
+			background-color: $contact-list-background-active;
+		}
+
+		&-skeleton {
+			gap: .5rem;
+		}
+	}
+}
+
+// ------------ CHAT LIST ------------ //

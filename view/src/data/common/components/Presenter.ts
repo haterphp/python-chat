@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { AbstractComponentState } from "./State";
+import { AbstractState } from "../State";
 import { IClassLifeCycle } from "./Lifecycle";
-import { AbstractComponentData } from "./Data";
+import { AbstractData } from "../Data";
 import { EventEmitter, ISubsriber } from "../EventEmitter";
 
 export type IComponentProps = Record<string, string | boolean | number | Function>
@@ -21,8 +21,8 @@ export type IAbstractComponentProps<TStateObject extends object = object> =
 	& IComponentProps
 
 export abstract class AbstractPresenter<
-	TState extends AbstractComponentState<TStateObject>,
-	TData extends AbstractComponentData<TState, TStateObject>,
+	TState extends AbstractState<TStateObject>,
+	TData extends AbstractData<TState, TStateObject> | undefined = undefined,
 	TStateObject extends object = object,
 > {
 
@@ -77,6 +77,8 @@ export abstract class AbstractPresenter<
 
 	// Life cycle hooks for render component
 	private __componentMount(): void {
+		console.log("DEBUG: [%s] mount", this.constructor.name)
+
 		this._data?.mount(this._state)
 		this._state.mount()
 
@@ -84,6 +86,8 @@ export abstract class AbstractPresenter<
 	}
 
 	private __componentUnmount(): void {
+		console.log("DEBUG: [%s] unmount", this.constructor.name)
+
 		this._data?.unmount()
 		this._state.unmount()
 

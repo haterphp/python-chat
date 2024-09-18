@@ -27,7 +27,11 @@
 
 	/* Paths */
 	"paths": {
-		"@/*": ["./src/*"]
+		"@app/*": ["./src/app/*"],
+		"@shared/*": ["./src/sharec/*"],
+		"@pages/*": ["./src/pages/*"],
+		"@widgets/*": ["./src/widgets/*"],
+		"@data/*": ["./src/data/*"]
 	}
   },
   "include": ["src"]

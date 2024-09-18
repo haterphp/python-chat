@@ -1,0 +1,45 @@
+// ------------ CHAT WINDOW LAYOUT ------------ //
+// Main layout
+.chat_window_layout {
+	width: 100%;
+	height: 100vh;
+
+	background-color: $color-accent-background;
+
+	&__container {
+		width: 100%;
+		max-width: 1682px;
+		height: 100vh;
+		overflow: hidden;
+
+		background-color: $color-default-background;
+
+		margin: 0 auto;
+
+		display: grid;
+		grid-template-columns: minmax(250px, 350px) 1fr;
+
+	}
+
+	&__sidebar {
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+
+		border-right: solid 1px $color-default-border;
+
+		background-color: $color-default-background;
+
+	}
+
+	&__content {
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+
+		background-color: $color-default-background;
+
+	}
+}
+
+// ------------ CHAT WINDOW LAYOUT ------------ //

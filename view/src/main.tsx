@@ -4,8 +4,7 @@ import 'es6-shim'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import '@/styles/index.scss'
-import App from './App.tsx'
+import App from './app/App.tsx'
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
