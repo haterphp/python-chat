@@ -9,17 +9,6 @@ export abstract class CommonRouter implements IClassLifeCycle {
 		this._routerState = new RouterState(defaultRoute, this._getRoutes())
 	}
 
-	public getCurrentRoute(): IRoute['component'] {
-		const currentRoute = this._routerState.getStateValue('currentRoute')
-		const allRoutes = this._routerState.getStateValue('routes')
-
-		for (const route of allRoutes) {
-			if (route.routeId === currentRoute) return route.component
-		}
-
-		return null
-	}
-
 	public mount(): void {
 		this._routerState.mount()
 	}
@@ -28,8 +17,11 @@ export abstract class CommonRouter implements IClassLifeCycle {
 		this._routerState.unmount()
 	}
 
-	public onRouteChanged(callback: ISubsriber<string>): void {
-		this._routerState.subscribeToStateKeyChanges('currentRoute', callback)
+	public onRouteChanged(callback: ISubsriber<IRoute | null>): void {
+		this._routerState.subscribeToStateKeyChanges(
+			'routeName',
+			(route) => callback(this.__getCurrentRoute(route))
+		)
 	}
 
 	public navigate(route: string): void {
@@ -37,4 +29,14 @@ export abstract class CommonRouter implements IClassLifeCycle {
 	}
 
 	protected abstract _getRoutes(): IRoute[]
+
+	private __getCurrentRoute(findingRoute: string): IRoute | null {
+		const allRoutes = this._routerState.getStateValue('routes')
+
+		for (const route of allRoutes) {
+			if (route.routeId === findingRoute) return route
+		}
+
+		return null
+	}
 }

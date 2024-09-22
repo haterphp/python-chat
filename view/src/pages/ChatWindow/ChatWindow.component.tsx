@@ -1,8 +1,14 @@
-import { lazy } from "react"
+import { lazy, Suspense } from "react"
 import { ChatWindowPresenter } from "./model/ChatWindow.presenter"
 import { ChatWindowState } from "./model/ChatWindow.state"
 
-const chatWindowState = new ChatWindowState()
-const ChatWindow = lazy(() => new ChatWindowPresenter(chatWindowState).render())
+const state = new ChatWindowState()
+const ChatWindowComponent = lazy(() => new ChatWindowPresenter(state).render())
 
-export default ChatWindow
+export default function ChatWindowPage() {
+	return (
+		<Suspense>
+			<ChatWindowComponent />
+		</Suspense>
+	)
+}

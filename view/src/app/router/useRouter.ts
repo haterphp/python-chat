@@ -1,15 +1,21 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import { CommonRouter } from "./Router";
 import { useLifeCycleComponent } from "@widgets/LifeCycle/useLifeCycleComponent";
+import { IRoute } from "./Router.state";
 
 export const useRouter = (router: CommonRouter): ReactNode => {
-	const [currentRoute, setCurrentRoute] = useState(router.getCurrentRoute())
+	const [currentRoute, setCurrentRoute] = useState<IRoute | null>(null)
 
-	useLifeCycleComponent(router)
-
-	useEffect(() => {
+	const beforeMount = () => {
 		router.onRouteChanged(setCurrentRoute)
-	}, [router, setCurrentRoute])
+	}
 
-	return currentRoute
+	useLifeCycleComponent(router, { beforeMount })
+
+	const RenderComponent = useMemo(() => {
+		if (currentRoute === null) return null
+		return currentRoute.component
+	}, [currentRoute])
+
+	return RenderComponent
 }

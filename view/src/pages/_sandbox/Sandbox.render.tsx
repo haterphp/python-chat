@@ -1,3 +1,4 @@
+import ApplicationRouter, { ApplicationRoutes } from "@app/router/routers/ApplicationRouter";
 import { IAbstractComponentProps } from "@data/common/components/Presenter";
 import { ISandboxStateObject } from "@pages/_sandbox/model/Sandbox.state";
 import { FC, FormEvent, useEffect, useState } from "react";
@@ -29,6 +30,12 @@ export default function SandboxRenderComponent(props: IAbstractComponentProps<IS
 			$itemInput.value = ''
 		}
 
+		const handleOnRedirect = (path: string) => {
+			return () => {
+				ApplicationRouter.navigate(path)
+			}
+		}
+
 		return (
 			<>
 				<h1>Sandbox</h1>
@@ -42,6 +49,9 @@ export default function SandboxRenderComponent(props: IAbstractComponentProps<IS
 				<ol>
 					{data.map(item => <li key={item}>{item}</li>)}
 				</ol>
+
+				<button onClick={handleOnRedirect(ApplicationRoutes.AUTH)}>Redirect to Auth</button>
+				<button onClick={handleOnRedirect(ApplicationRoutes.CHAT_WINDOW)}>Redirect to Chat</button>
 			</>
 		)
 	}

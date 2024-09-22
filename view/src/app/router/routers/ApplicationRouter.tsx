@@ -1,8 +1,7 @@
 import { IRoute } from "../Router.state";
 import { CommonRouter } from "../Router";
-
 import Sandbox from "@pages/_sandbox/Sandbox.component";
-import ChatWindow from "@pages/ChatWindow/ChatWindow.component";
+import ChatWindowPage from "@pages/ChatWindow/ChatWindow.component";
 
 export enum ApplicationRoutes {
 	AUTH = 'auth',
@@ -10,7 +9,7 @@ export enum ApplicationRoutes {
 	SANDBOX = 'sandbox'
 }
 
-class ApplicationRouter extends CommonRouter {
+class ApplicationRouterClass extends CommonRouter {
 
 	constructor() {
 		super(ApplicationRoutes.CHAT_WINDOW)
@@ -19,10 +18,16 @@ class ApplicationRouter extends CommonRouter {
 	protected _getRoutes(): IRoute[] {
 		return [
 			{ routeId: ApplicationRoutes.AUTH, component: null },
-			{ routeId: ApplicationRoutes.SANDBOX, component: <Sandbox/> },
-			{ routeId: ApplicationRoutes.CHAT_WINDOW, component: <ChatWindow /> },
+			{ routeId: ApplicationRoutes.SANDBOX, component: <Sandbox /> },
+			{ routeId: ApplicationRoutes.CHAT_WINDOW, component: <ChatWindowPage /> },
 		]
 	}
 }
 
-export default new ApplicationRouter()
+const ApplicationRouter = new ApplicationRouterClass()
+
+// Is enable with dev mode
+// @ts-ignore
+window.ApplicationRoute = ApplicationRouter
+
+export default ApplicationRouter
