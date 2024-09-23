@@ -1,13 +1,10 @@
 from typing import List
-from fastapi.encoders import jsonable_encoder
 from fastapi.params import Depends
-from fastapi.responses import JSONResponse
 from server.database import get_db
-from server.components.chats import ChatSchema
+from server.components.chats import ChatSchema, ChatService
 from server.route_actions import IRouteAction
 from sqlalchemy.orm import Session
 
-from server.services import ChatService
 
 class GetAllChatsAction(IRouteAction):
 

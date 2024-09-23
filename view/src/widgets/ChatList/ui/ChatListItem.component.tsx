@@ -9,7 +9,7 @@ export default function ChatListitem(props: IChatListItemProps) {
 
 	return (
 		<div className="chats_list__item">
-			{chat.id}
+			{chat.name}
 		</div>
 	)
 }
