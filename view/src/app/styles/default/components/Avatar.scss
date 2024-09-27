@@ -1,0 +1,21 @@
+$text-color-avatar: #ffffff;
+
+.avatar {
+	width: 40px;
+	min-width: 40px;
+
+	height: 40px;
+	min-height: 40px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 50%;
+
+	color: $text-color-avatar;
+
+	&.color {
+		&-primary { background-color: $color-primary; }
+	}
+}

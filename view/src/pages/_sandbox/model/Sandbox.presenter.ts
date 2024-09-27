@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import SandboxRenderComponent from "@pages/_sandbox/Sandbox.render";
-import { AbstractPresenter, IAbstractComponentProps } from "@data/common/components/Presenter";
+import { AbstractPresenter, IAbstractComponentProps, IComponentProps } from "@data/common/components/Presenter";
 import { ISandboxStateObject, SandboxComponentState } from "@pages/_sandbox/model/Sandbox.state";
 import { SandboxComponentData } from "@pages/_sandbox/model/Sandbox.data";
 
@@ -18,4 +18,5 @@ export class SandboxComponentPresenter extends AbstractPresenter<SandboxComponen
 	protected _getRenderComponent(props: IAbstractComponentProps<ISandboxStateObject>): FC {
 		return SandboxRenderComponent(props)
 	}
+
 }

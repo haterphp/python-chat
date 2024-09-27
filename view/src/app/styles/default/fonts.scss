@@ -21,3 +21,16 @@
 	font-weight: 300;
 	src: url(fonts/Roboto-Light.ttf);
 }
+
+h1, h2, h3, h4, h5, h6, p, span, div {
+	font-family: 'Roboto';
+	color: $text-color-primary;
+}
+
+.text {
+	&-color {
+		&-primary { color: $text-color-primary;}
+		&-common { color: $text-color-common;}
+		&-secondary { color: $text-color-secondary;}
+	}
+}

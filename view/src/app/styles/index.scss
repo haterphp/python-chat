@@ -1,9 +1,18 @@
-// Variables region
+// ------ VARIABLES ------ //
 @import "default/variables.scss";
 
-// Override variables region
+// EXAMPLE: Override variables
 // @import "dark/variables.scss";
 
-// Default chat styles configuration
-@import "default/_index.scss";
-// Default chat styles configuration
+// ------ FONTS ------ //
+@import "default/fonts.scss";
+
+// ------ COMPONENTS ------ //
+@import "default/components.scss";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
