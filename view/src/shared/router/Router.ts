@@ -1,5 +1,5 @@
-import { IClassLifeCycle } from "@data/common/components/Lifecycle";
-import { ISubsriber } from "@data/common/EventEmitter";
+import { IClassLifeCycle } from "../common/Lifecycle";
+import { ISubsriber } from "../common/EventEmitter";
 import { IRoute, RouterState } from "./Router.state";
 
 export abstract class CommonRouter implements IClassLifeCycle {

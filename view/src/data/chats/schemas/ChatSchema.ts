@@ -1,4 +1,4 @@
-import { BaseSchema } from "@data/common/BaseSchema";
+import { BaseSchema } from "@shared/data/BaseSchema";
 
 interface ICreateChatSchema {
 	id: number

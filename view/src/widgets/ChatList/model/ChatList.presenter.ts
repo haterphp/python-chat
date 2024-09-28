@@ -1,15 +1,12 @@
-import { FC } from "react";
-import { AbstractPresenter, IAbstractComponentProps } from "@data/common/components/Presenter";
+import { Presenter } from "../../../shared/common/Presenter";
 
 import { ChatListState, IChatListStateObject } from "./ChatList.state";
 import { ChatListData } from "./ChatList.data";
+import { ComponentState } from "@shared/application/ComponentState";
 
-import ChatListRenderComponent from "../ChatList.render";
-
-export class ChatListPresenter extends AbstractPresenter<ChatListState, ChatListData, IChatListStateObject> {
-
-	protected _getRenderComponent(props: IAbstractComponentProps<IChatListStateObject>): FC {
-		return ChatListRenderComponent(props)
+export class ChatListPresenter extends Presenter<IChatListStateObject, ChatListState, ChatListData> {
+	public mount(componentState: ComponentState): void {
+		this._state.subscribeToStateKeyChanges('chatsList', (data) => console.log(data))
+		super.mount(componentState)
 	}
-
 }

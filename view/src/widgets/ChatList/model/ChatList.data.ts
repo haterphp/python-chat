@@ -1,7 +1,7 @@
-import { AbstractData } from "@data/common/Data";
+import { AbstractData } from "@shared/common/Data";
 import { ChatListState, IChatListStateObject } from "./ChatList.state";
 import { ChatSchema } from "@data/chats/schemas/ChatSchema";
-import { sleepResolve } from "@data/common/helpers";
+import { sleepResolve } from "@shared/helpers";
 
 const STUB_CHATS_LIST = [
 	ChatSchema.new({ id: 1, name: 'Test 1' }),

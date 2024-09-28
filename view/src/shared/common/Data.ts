@@ -1,9 +1,9 @@
-import { IClassLifeCycle } from "./components/Lifecycle";
-import { AbstractState } from "./State";
+import { IClassLifeCycle } from "./Lifecycle";
+import { State } from "./State";
 
 
 export abstract class AbstractData<
-	TState extends AbstractState<TStateObject>,
+	TState extends State<TStateObject>,
 	TStateObject extends object = object,
 > implements IClassLifeCycle {
 

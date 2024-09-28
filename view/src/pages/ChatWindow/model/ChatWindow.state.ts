@@ -1,3 +1,3 @@
-import { AbstractState } from "@data/common/State";
+import { AbstractState } from "../../../shared/State";
 
 export class ChatWindowState extends AbstractState {}

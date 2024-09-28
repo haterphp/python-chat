@@ -28,10 +28,10 @@
 	/* Paths */
 	"paths": {
 		"@app/*": ["./src/app/*"],
-		"@shared/*": ["./src/sharec/*"],
+		"@shared/*": ["./src/shared/*"],
 		"@pages/*": ["./src/pages/*"],
 		"@widgets/*": ["./src/widgets/*"],
-		"@data/*": ["./src/data/*"]
+		"@data/*": ["./src/data/*"],
 	}
   },
   "include": ["src"]

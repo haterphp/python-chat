@@ -1,4 +1,4 @@
-import { IClassLifeCycle } from "@data/common/components/Lifecycle";
+import { IClassLifeCycle } from "../../shared/common/Lifecycle";
 import { useEffect } from "react";
 
 interface ILifeCycleHooks {

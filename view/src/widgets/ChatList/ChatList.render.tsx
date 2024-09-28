@@ -1,4 +1,4 @@
-import { IAbstractComponentProps } from "@data/common/components/Presenter";
+import { IAbstractComponentProps } from "../../shared/common/Presenter";
 import { IChatListStateObject } from "./model/ChatList.state";
 import { useLifeCycleComponent } from "@widgets/LifeCycle/useLifeCycleComponent";
 import { useState } from "react";

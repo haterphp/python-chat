@@ -1,12 +1,12 @@
 import { EventEmitter, ISubsriber } from "./EventEmitter"
-import { IClassLifeCycle } from "./components/Lifecycle"
+import { IClassLifeCycle } from "../common/Lifecycle"
 
 export const STATE_HAS_CHANGED_EVENT_KEY = 'state_changed'
 export const STATE_KEY_HAS_CHANGED_EVENT_KEY = (key: string) => `key_${key}_updated`
 
 export type StateValueFabric<TValue> = (value: TValue) => TValue
 
-export abstract class AbstractState<TState extends object = object> implements IClassLifeCycle {
+export class State<TState extends object = object> implements IClassLifeCycle {
 	private __state: TState
 
 	protected _eventEmmitter: EventEmitter

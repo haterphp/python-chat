@@ -1,9 +1,10 @@
-import { AbstractState, STATE_KEY_HAS_CHANGED_EVENT_KEY } from "@data/common/State";
-import { ReactNode } from "react";
+import { ReactComponentProvider } from "@shared/application/component_providers/ReactComponent.provider";
+import { State, STATE_KEY_HAS_CHANGED_EVENT_KEY } from "../common/State";
+import { Presenter } from "@shared/common/Presenter";
 
 export interface IRoute {
 	routeId: string
-	component: ReactNode
+	component: ReactComponentProvider<Presenter> | null
 	privacyPolicies?: unknown[]
 }
 
@@ -12,7 +13,7 @@ export interface IRouterStateObject {
 	routes: IRoute[]
 }
 
-export class RouterState extends AbstractState<IRouterStateObject> {
+export class RouterState extends State<IRouterStateObject> {
 	constructor(defaultRoute: string, routes: IRoute[]) {
 		super({ routeName: defaultRoute, routes })
 	}

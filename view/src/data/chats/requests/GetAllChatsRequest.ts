@@ -1,6 +1,6 @@
 import axios from "axios";
-import { AbstractRequest } from "@data/common/AbstractRequest";
-import { sleepResolve } from "@data/common/helpers";
+import { AbstractRequest } from "@shared/data/AbstractRequest";
+import { sleepResolve } from "@shared/helpers";
 import { ChatSchema } from "../schemas/ChatSchema";
 
 export class GetAllChatRequests extends AbstractRequest<{}, ChatSchema[]> {

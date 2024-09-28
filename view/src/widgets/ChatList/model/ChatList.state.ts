@@ -1,11 +1,11 @@
 import { ChatSchema } from "@data/chats/schemas/ChatSchema";
-import { AbstractState } from "@data/common/State";
+import { State } from "@shared/common/State";
 
 export interface IChatListStateObject {
 	chatsList: ChatSchema[]
 }
 
-export class ChatListState extends AbstractState<IChatListStateObject> {
+export class ChatListState extends State<IChatListStateObject> {
 	public setChatsList(chats: IChatListStateObject['chatsList']): void {
 		this._setStateValue('chatsList', () => chats)
 	}
