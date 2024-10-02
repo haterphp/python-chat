@@ -1,5 +1,5 @@
 import ApplicationRouter, { ApplicationRoutes } from "@shared/router/routers/ApplicationRouter"
-import { IAbstractComponentProps } from "../../shared/common/Presenter"
+import { IAbstractComponentProps } from "../../shared/application/Presenter"
 import ChatList from "@widgets/ChatList/ChatList.component"
 
 export default function ChatWindowRenderComponent (_: IAbstractComponentProps) {

@@ -1,10 +1,10 @@
 import { IClassLifeCycle } from "@shared/common/Lifecycle";
 import { CommonRouter } from "@shared/router/Router";
-import { ReactRenderComponentProvider } from "./render_providers/ReactRenderComponent.provider";
+import { ReactRouterProvider } from "../router/providers/ReactRouter";
 
 export default class Application<
 	TRouter extends CommonRouter = CommonRouter,
-	TComponentProvider extends ReactRenderComponentProvider= ReactRenderComponentProvider
+	TComponentProvider extends ReactRouterProvider = ReactRouterProvider
 > implements IClassLifeCycle {
 
 	protected _router: TRouter

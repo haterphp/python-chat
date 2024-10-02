@@ -1,17 +1,19 @@
-import { IClassLifeCycle } from "../../shared/common/Lifecycle";
+import { IAbstractComponentProps } from "@shared/application/AbstractComponentProvider";
 import { useEffect } from "react";
+import { COMPONENT_ALREADY_MOUNTED } from "@shared/application/states/RenderComponentState";
 
 interface ILifeCycleHooks {
 	beforeMount?: () => void
 	afterMount?: () => void
 }
 
-export const useLifeCycleComponent = (component: IClassLifeCycle, hooks: ILifeCycleHooks = {}): void => {
-	useEffect(() => {
-		if (hooks.beforeMount !== undefined) hooks.beforeMount()
-		component.mount()
-		if (hooks.afterMount !== undefined) hooks.afterMount()
+export const useLifeCycleComponent = <TStateObject extends object>(component: IAbstractComponentProps<TStateObject>, hooks?: ILifeCycleHooks): void => {
+	const { emitAction } = component
 
-		return component.unmount.bind(component)
+	useEffect(() => {
+		console.log('123')
+		hooks?.beforeMount?.()
+		emitAction(COMPONENT_ALREADY_MOUNTED)
+		hooks?.afterMount?.()
 	}, [])
 }

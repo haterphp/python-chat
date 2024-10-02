@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { AbstractPresenter, IAbstractComponentProps } from "../../../shared/common/Presenter";
+import { AbstractPresenter, IAbstractComponentProps } from "../../../shared/application/Presenter";
 import { ChatWindowState } from "./ChatWindow.state";
 import ChatWindowRenderComponent from "../ChatWindow.render";
 

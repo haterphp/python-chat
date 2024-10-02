@@ -1,8 +1,8 @@
-import { IAbstractComponentProps } from "../../shared/common/Presenter";
 import { IChatListStateObject } from "./model/ChatList.state";
 import { useLifeCycleComponent } from "@widgets/LifeCycle/useLifeCycleComponent";
 import { useState } from "react";
 import ChatListitem from "./ui/ChatListItem.component";
+import { IAbstractComponentProps } from "@shared/application/AbstractComponentProvider";
 
 export default function ChatListRenderComponent(props: IAbstractComponentProps<IChatListStateObject>) {
 	return () => {

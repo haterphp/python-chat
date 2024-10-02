@@ -1,11 +1,9 @@
 import { IRoute } from "../Router.state";
 import { CommonRouter } from "../Router";
-import { ReactComponentProvider } from "@shared/application/component_providers/ReactComponent.provider";
-import { Presenter } from "@shared/common/Presenter";
-import { State } from "@shared/common/State";
 import { ChatListPresenter } from "@widgets/ChatList/model/ChatList.presenter";
 import { ChatListState } from "@widgets/ChatList/model/ChatList.state";
 import { ChatListData } from "@widgets/ChatList/model/ChatList.data";
+import ChatListComponent from "@widgets/ChatList/ChatList.component";
 
 export enum ApplicationRoutes {
 	AUTH = 'auth',
@@ -24,8 +22,7 @@ class ApplicationRouterClass extends CommonRouter {
 	protected _getRoutes(): IRoute[] {
 		return [
 			{ routeId: ApplicationRoutes.AUTH, component: null },
-			// @ts-ignore
-			{ routeId: ApplicationRoutes.CHAT_WINDOW, component: new ReactComponentProvider(chatListPresenter) },
+			{ routeId: ApplicationRoutes.CHAT_WINDOW, component: new ChatListComponent(chatListPresenter) as unknown as IRoute['component'] },
 		]
 	}
 }

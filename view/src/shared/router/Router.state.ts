@@ -1,10 +1,16 @@
-import { ReactComponentProvider } from "@shared/application/component_providers/ReactComponent.provider";
 import { State, STATE_KEY_HAS_CHANGED_EVENT_KEY } from "../common/State";
-import { Presenter } from "@shared/common/Presenter";
+import { Presenter } from "@shared/application/Presenter";
+import { AbstractData } from "@shared/common/Data";
+import { AbstractComponentProvider } from "@shared/application/AbstractComponentProvider";
+import { ComponentState } from "@shared/application/states/ComponentState";
 
-export interface IRoute {
+export interface IRoute<
+	TStateObject extends object = object,
+	TState extends ComponentState<TStateObject> = ComponentState<TStateObject>,
+	TData extends AbstractData<TState, TStateObject> = AbstractData<TState, TStateObject>
+> {
 	routeId: string
-	component: ReactComponentProvider<Presenter> | null
+	component: AbstractComponentProvider<Presenter<TStateObject, TState, TData>, TStateObject, TState, TData> | null
 	privacyPolicies?: unknown[]
 }
 

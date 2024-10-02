@@ -34,6 +34,7 @@ export class State<TState extends object = object> implements IClassLifeCycle {
 
 	public mount(): void {
 		this._eventEmmitter.emit(STATE_HAS_CHANGED_EVENT_KEY, this.__state)
+
 	}
 
 	public unmount(): void {
