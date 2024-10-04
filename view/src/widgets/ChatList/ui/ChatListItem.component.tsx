@@ -4,13 +4,18 @@ import { ChatSchema } from "@data/chats/schemas/ChatSchema"
 
 interface IChatListItemProps {
 	chat: ChatSchema
+	onClick: (chatId: ChatSchema['id']) => void
 }
 
 export default function ChatListitem(props: IChatListItemProps) {
-	const { chat } = props
+	const { chat, onClick: handleOnChatItemClick } = props
+
+	const handleOnClick = () => {
+		handleOnChatItemClick(chat.id)
+	}
 
 	return (
-		<div className="chats_list__item">
+		<div className="chats_list__item" onClick={handleOnClick}>
 			<Avatar text={chat.name.charAt(0)} />
 
 			<div className="content">

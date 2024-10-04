@@ -38,8 +38,6 @@ export class Presenter<
 
 	// ------------------------------------------
 	public mount(componentRenderState: ComponentRenderState): void {
-		console.log("DEBUG: [%s] mount", this.constructor.name)
-
 		this.__componentRenderState = componentRenderState
 
 		// Loading data
@@ -51,14 +49,14 @@ export class Presenter<
 		}
 		// Loading data
 
+		console.log('mount %s', this.constructor.name)
+
 		this._eventEmitter.subscribe(COMPONENT_ALREADY_MOUNTED, this.__componentIsAlreadyMounted.bind(this))
 		this._state.mount()
 	}
 
 	// ------------------------------------------
 	public unmount(): void {
-		console.log("DEBUG: [%s] unmount", this.constructor.name)
-
 		this._data?.unmount()
 		this._state.unmount()
 		this.__componentRenderState?.unmount()

@@ -1,16 +1,10 @@
+import { AbstractComponentRenderAdapter } from "@shared/application/adapters/AbstractComponentAdapter";
 import { State, STATE_KEY_HAS_CHANGED_EVENT_KEY } from "../common/State";
 import { Presenter } from "@shared/application/Presenter";
-import { AbstractData } from "@shared/common/Data";
-import { AbstractComponentProvider } from "@shared/application/AbstractComponentProvider";
-import { ComponentState } from "@shared/application/states/ComponentState";
 
-export interface IRoute<
-	TStateObject extends object = object,
-	TState extends ComponentState<TStateObject> = ComponentState<TStateObject>,
-	TData extends AbstractData<TState, TStateObject> = AbstractData<TState, TStateObject>
-> {
+export interface IRoute {
 	routeId: string
-	component: AbstractComponentProvider<Presenter<TStateObject, TState, TData>, TStateObject, TState, TData> | null
+	component: AbstractComponentRenderAdapter<Presenter<any, any, any>, any, any, any, any, any> | null
 	privacyPolicies?: unknown[]
 }
 

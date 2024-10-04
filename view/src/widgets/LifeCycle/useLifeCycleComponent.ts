@@ -1,4 +1,4 @@
-import { IAbstractComponentProps } from "@shared/application/AbstractComponentProvider";
+import { IAbstractComponentProps } from "@shared/application/components/AbstractComponent";
 import { useEffect } from "react";
 import { COMPONENT_ALREADY_MOUNTED } from "@shared/application/states/RenderComponentState";
 
@@ -11,7 +11,6 @@ export const useLifeCycleComponent = <TStateObject extends object>(component: IA
 	const { emitAction } = component
 
 	useEffect(() => {
-		console.log('123')
 		hooks?.beforeMount?.()
 		emitAction(COMPONENT_ALREADY_MOUNTED)
 		hooks?.afterMount?.()

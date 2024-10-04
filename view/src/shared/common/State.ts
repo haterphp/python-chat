@@ -4,7 +4,7 @@ import { IClassLifeCycle } from "../common/Lifecycle"
 export const STATE_HAS_CHANGED_EVENT_KEY = 'state_changed'
 export const STATE_KEY_HAS_CHANGED_EVENT_KEY = (key: string) => `key_${key}_updated`
 
-export type StateValueFabric<TValue> = (value: TValue) => TValue
+export type StateValueFabric<TValue> = (value: TValue) => TValue | Promise<TValue>
 
 export class State<TState extends object = object> implements IClassLifeCycle {
 	private __state: TState
@@ -42,7 +42,9 @@ export class State<TState extends object = object> implements IClassLifeCycle {
 	}
 
 	protected _setStateValue<TKey extends keyof TState>(key: TKey, value: StateValueFabric<TState[TKey]>) {
-		this.__state[key] = value(this.__state[key])
-		this._eventEmmitter.emit(STATE_KEY_HAS_CHANGED_EVENT_KEY(key.toString()), this.__state[key])
+		Promise.resolve(value(this.__state[key])).then((value) => {
+			this.__state[key] = value
+			this._eventEmmitter.emit(STATE_KEY_HAS_CHANGED_EVENT_KEY(key.toString()), this.__state[key])
+		})
 	}
 }
