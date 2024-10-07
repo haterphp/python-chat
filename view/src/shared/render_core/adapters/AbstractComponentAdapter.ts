@@ -62,14 +62,14 @@ export abstract class AbstractComponentRenderAdapter<
 		this.__component.mount()
 	}
 
-	public unmount(): void {
-		this.__componentRenderState.unmount()
-		this.__component.unmount()
-	}
-
 	public afterMount(): void {
 		this.__component.afterMount()
 		this.__componentRenderState.setComponentState(ComponentRenderStatesEnum.IDLE)
+	}
+
+	public unmount(): void {
+		this.__componentRenderState.unmount()
+		this.__component.unmount()
 	}
 
 	public render(): void {

@@ -49,14 +49,14 @@ export abstract class AbstractComponent<
 		this._presenter.mount()
 	}
 
-	public unmount(): void {
-		console.log("DEBUG: [%s] unmount", this.constructor.name)
-		this._presenter.unmount()
-	}
-
 	public afterMount(): void {
 		console.log("DEBUG: [%s] afterMount", this.constructor.name)
 		this._presenter.afterMount()
+	}
+
+	public unmount(): void {
+		console.log("DEBUG: [%s] unmount", this.constructor.name)
+		this._presenter.unmount()
 	}
 
 	public getRenderComponentByState(state: ComponentRenderStatesEnum): TRenderComponent {
