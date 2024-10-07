@@ -6,11 +6,14 @@ import { ChatListPresenter } from "./model/ChatList.presenter"
 import { ChatListState, IChatListStateObject } from "./model/ChatList.state"
 import { ChatListData } from "./model/ChatList.data"
 import ChatListRenderComponent from "./ChatList.render"
-import { IAbstractComponentProps } from "@shared/application/components/AbstractComponent"
-import { ReactComponent } from "@shared/application/components/ReactComponent"
-import { ReactComponentRendereAdapter } from "@shared/application/adapters/ReactComponentAdapter"
+import { IAbstractComponentProps } from "@shared/render_core/components/AbstractComponent"
+import { ReactComponent } from "@shared/render_core/components/ReactComponent"
 
 class ChatListComponent extends ReactComponent<ChatListPresenter, IChatListStateObject, ChatListState, ChatListData> {
+	constructor() {
+		super(new ChatListPresenter(new ChatListState(), new ChatListData()))
+	}
+
 	protected _getRenderComponent(props: IAbstractComponentProps<IChatListStateObject>): FC {
 		return ChatListRenderComponent(props)
 	}
@@ -19,8 +22,4 @@ class ChatListComponent extends ReactComponent<ChatListPresenter, IChatListState
 		return ChatListSkeleton
 	}
 }
-
-const presenter = new ChatListPresenter(new ChatListState(), new ChatListData())
-
-const ChatListWidget = new ReactComponentRendereAdapter(new ChatListComponent(presenter))
-export default ChatListWidget
+export default ChatListComponent

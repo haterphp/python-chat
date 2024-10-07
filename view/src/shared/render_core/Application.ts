@@ -35,9 +35,11 @@ export default class Application<
 
 		console.log(route)
 
-		this.__route?.unmount()
+		// this.__route?.unmount()
 
-		this.__route = route.component
-		this.__route?.mount(this._rootContainer)
+		// this.__route = route.component
+		// this.__route?.mount(this._rootContainer)
+
+		// this.__route?.render()
 	}
 }

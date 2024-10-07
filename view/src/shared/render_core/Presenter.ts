@@ -1,7 +1,7 @@
 import { IClassLifeCycle } from "../common/Lifecycle";
 import { AbstractData } from "../common/Data";
 import { EventEmitter, ISubsriber } from "../common/EventEmitter";
-import { COMPONENT_ALREADY_MOUNTED, ComponentRenderState, ComponentRenderStatesEnum } from "@shared/application/states/RenderComponentState";
+import { ComponentRenderState, ComponentRenderStatesEnum } from "@shared/render_core/states/RenderComponentState";
 import { ComponentState } from "./states/ComponentState";
 
 export interface IPresenterProps<TStateObject extends object = object> {
@@ -25,46 +25,46 @@ export class Presenter<
 
 	protected _data?: TData
 
-	private __componentRenderState: ComponentRenderState | null
-
 	constructor (state: TState, data?: TData) {
 		this._state = state
 		this._data = data
 
 		this._eventEmitter = new EventEmitter()
 
-		this.__componentRenderState = null
 	}
 
-	// ------------------------------------------
-	public mount(componentRenderState: ComponentRenderState): void {
-		this.__componentRenderState = componentRenderState
-
-		// Loading data
+	public beforeMount(setComponentState: (state: ComponentRenderStatesEnum) => void): void {
 		if (this._data !== undefined) {
-			componentRenderState.setComponentState(ComponentRenderStatesEnum.LOADING)
-			this._data.getData(this._state)
-				.then(() => {componentRenderState.setComponentState(ComponentRenderStatesEnum.IS_MOUNTING)})
-				.catch(() => {componentRenderState.setComponentState(ComponentRenderStatesEnum.DATA_IS_NOT_LOADED)})
+
+			setComponentState(ComponentRenderStatesEnum.LOADING)
+
+			this._data?.getData(this._state)
+				.then(() => {
+					this._data?.beforeMount(this._state)
+					setComponentState(ComponentRenderStatesEnum.IS_READY_FOR_MOUNTING)
+				})
+				.catch(() => {
+					setComponentState(ComponentRenderStatesEnum.DATA_IS_NOT_LOADED)
+				})
 		}
-		// Loading data
+	}
 
-		console.log('mount %s', this.constructor.name)
-
-		this._eventEmitter.subscribe(COMPONENT_ALREADY_MOUNTED, this.__componentIsAlreadyMounted.bind(this))
+	public mount(): void {
+		this._data?.mount()
 		this._state.mount()
 	}
 
-	// ------------------------------------------
+	public afterMount(): void {
+		this._state.afterMount()
+	}
+
 	public unmount(): void {
 		this._data?.unmount()
 		this._state.unmount()
-		this.__componentRenderState?.unmount()
 
 		this._eventEmitter.unsubscribeAllChilds()
 	}
 
-	// ------------------------------------------
 	public getPresenterProps(): IPresenterProps<TStateObject> {
 		return {
 			emitAction: this._eventEmitter.emit.bind(this._eventEmitter),
@@ -76,11 +76,5 @@ export class Presenter<
 			subscribeToStateChanges: this._state.subscribeToStateChanges.bind(this._state),
 			subscribeToStateKeyChanges: this._state.subscribeToStateKeyChanges.bind(this._state),
 		}
-	}
-
-	private __componentIsAlreadyMounted () {
-		this._state.afterMount()
-		this.__componentRenderState?.setComponentState(ComponentRenderStatesEnum.IDLE)
-
 	}
 }

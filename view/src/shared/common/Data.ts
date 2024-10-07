@@ -7,9 +7,11 @@ export abstract class AbstractData<
 	TStateObject extends object = object,
 > implements IClassLifeCycle {
 
-	public mount(state: TState): void {
+	public beforeMount(state: TState): void {
 		if (this._subscirbeSockets) this._subscirbeSockets(state)
 	}
+
+	public mount() {}
 
 	public unmount(): void {
 		if (this._unsubscirbeSockets) this._unsubscirbeSockets()

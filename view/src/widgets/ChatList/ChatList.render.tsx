@@ -1,8 +1,8 @@
 import { IChatListStateObject } from "./model/ChatList.state";
-import { useLifeCycleComponent } from "@widgets/LifeCycle/useLifeCycleComponent";
+import { useLifeCycleComponent } from "@widgets/ReactRender/useLifeCycleComponent";
 import { useState } from "react";
 import ChatListitem from "./ui/ChatListItem.component";
-import { IAbstractComponentProps } from "@shared/application/components/AbstractComponent";
+import { IAbstractComponentProps } from "@shared/render_core/components/AbstractComponent";
 import { ChatSchema } from "@data/chats/schemas/ChatSchema";
 
 export default function ChatListRenderComponent(props: IAbstractComponentProps<IChatListStateObject>) {
@@ -12,6 +12,7 @@ export default function ChatListRenderComponent(props: IAbstractComponentProps<I
 		const { emitAction } = props
 
 		const loadDataState = (state: IChatListStateObject) => {
+			console.log(state)
 			if (state.chatsList.length > 0) setChatLists(state.chatsList)
 		}
 

@@ -1,6 +1,6 @@
-import { AbstractComponentRenderAdapter } from "@shared/application/adapters/AbstractComponentAdapter";
+import { AbstractComponentRenderAdapter } from "@shared/render_core/adapters/AbstractComponentAdapter";
 import { State, STATE_KEY_HAS_CHANGED_EVENT_KEY } from "../common/State";
-import { Presenter } from "@shared/application/Presenter";
+import { Presenter } from "@shared/render_core/Presenter";
 
 export interface IRoute {
 	routeId: string

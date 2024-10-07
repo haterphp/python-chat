@@ -1,5 +1,5 @@
 import { ChatSchema } from "@data/chats/schemas/ChatSchema";
-import { ComponentState } from "@shared/application/states/ComponentState";
+import { ComponentState } from "@shared/render_core/states/ComponentState";
 
 export interface IChatListStateObject {
 	chatsList: ChatSchema[]

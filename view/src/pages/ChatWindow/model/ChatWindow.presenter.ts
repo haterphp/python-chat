@@ -1,11 +1,4 @@
-import { FC } from "react";
-import { AbstractPresenter, IAbstractComponentProps } from "../../../shared/application/Presenter";
 import { ChatWindowState } from "./ChatWindow.state";
-import ChatWindowRenderComponent from "../ChatWindow.render";
+import { Presenter } from "@shared/render_core/Presenter";
 
-export class ChatWindowPresenter extends AbstractPresenter<ChatWindowState> {
-
-	protected _getRenderComponent(props: IAbstractComponentProps): FC {
-		return ChatWindowRenderComponent(props)
-	}
-}
+export class ChatWindowPresenter extends Presenter<{}, ChatWindowState> {}

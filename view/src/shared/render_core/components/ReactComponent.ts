@@ -9,7 +9,7 @@ export abstract class ReactComponent<
 	TStateObject extends object,
 	TState extends ComponentState<TStateObject>,
 	TData extends AbstractData<TState, TStateObject>,
-> extends AbstractComponent<TPresenter, FC, TStateObject, TState, TData> {
+> extends AbstractComponent<FC, TPresenter, TStateObject, TState, TData> {
 	protected _getErrorRenderComponent(): FC {
 		return () => null
 	}

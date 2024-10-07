@@ -32,9 +32,19 @@ export class State<TState extends object = object> implements IClassLifeCycle {
 		this._eventEmmitter.subscribe(STATE_KEY_HAS_CHANGED_EVENT_KEY(key.toString()), callback)
 	}
 
+	public subscribeToCurrentValueStateKeyChanges<TKey extends keyof TState>(
+		key: TKey,
+		findedValue: TState[TKey] | TState[TKey][],
+		callback: ISubsriber<TState[TKey]>
+	): void {
+		this._eventEmmitter.subscribe(STATE_KEY_HAS_CHANGED_EVENT_KEY(key.toString()), (value: TState[TKey]) => {
+			if (Array.isArray(findedValue) && findedValue.includes(value)) return callback(value)
+			else if (findedValue === value) return callback(value)
+		})
+	}
+
 	public mount(): void {
 		this._eventEmmitter.emit(STATE_HAS_CHANGED_EVENT_KEY, this.__state)
-
 	}
 
 	public unmount(): void {

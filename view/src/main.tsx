@@ -1,19 +1,22 @@
 import 'reflect-metadata'
 import 'es6-shim'
 
-import ApplicationRouter from '@shared/router/routers/ApplicationRouter.tsx'
-import Application from '@shared/application/Application.ts'
-
 import '@app/styles/index.scss'
+import {renderReactComponent} from '@shared/render_core/render'
+import ChatWindowComponent from '@pages/ChatWindow/ChatWindow.component'
+import ChatListComponent from '@widgets/ChatList/ChatList.component'
 
 declare global {
-    interface Window { Application: Application; }
+    // interface Window { Application: Application; }
 }
 
 const root = document.getElementById('root')
 
 if (root !== null) {
 
-	window.Application = new Application(ApplicationRouter, root)
-	window.Application.mount()
+	// renderReactComponent(root, new ChatWindowComponent())
+	renderReactComponent(root, new ChatListComponent())
+
+	// window.Application = new Application(ApplicationRouter, root)
+	// window.Application.mount()
 }

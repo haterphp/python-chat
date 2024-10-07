@@ -17,7 +17,7 @@ class ApplicationRouterClass extends CommonRouter {
 	protected _getRoutes(): IRoute[] {
 		return [
 			{ routeId: ApplicationRoutes.AUTH, component: null },
-			{ routeId: ApplicationRoutes.CHAT_WINDOW, component: ChatListWidget },
+			// { routeId: ApplicationRoutes.CHAT_WINDOW, component: ChatListWidget() },
 		]
 	}
 }
