@@ -8,5 +8,5 @@ export function renderReactComponent(root: HTMLElement, component: AbstractCompo
 	adapter.beforeMount(root)
 	adapter.render()
 
-	return () => adapter.unmount()
+	return adapter.unmount.bind(adapter)
 }

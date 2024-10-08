@@ -29,9 +29,6 @@ export abstract class AbstractComponentRenderAdapter<
 	public beforeMount(rootContainer: HTMLElement): void {
 		this.__root = this.__defineRoot(rootContainer)
 
-		this.__component.setComponentRenderState(this.__componentRenderState)
-		this.__component.beforeMount()
-
 		this.__componentRenderState.subscribeToCurrentValueStateKeyChanges(
 			'state',
 			SHOULD_CALL_RENDER_STATES,
@@ -53,13 +50,18 @@ export abstract class AbstractComponentRenderAdapter<
 		this.__componentRenderState.subscribeToCurrentValueStateKeyChanges(
 			'state',
 			ComponentRenderStatesEnum.IS_INNER_COMPONENT_UNMOUNTED,
-			this.unmount.bind(this)
+			this.__component.innerComponentUnmount.bind(this)
 		)
+
+		this.__component.setComponentRenderState(this.__componentRenderState)
+		this.__component.beforeMount()
 	}
 
 	public mount(): void {
 		this.__componentRenderState.mount()
 		this.__component.mount()
+
+		this.__componentRenderState.setComponentState(ComponentRenderStatesEnum.IS_MOUNTING)
 	}
 
 	public afterMount(): void {

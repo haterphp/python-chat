@@ -17,9 +17,7 @@ export class ReactComponentRenderAdapter<
 
 	protected __injectToRoot(root: Root, Component: FC): void {
 		root.render(
-			<StrictMode>
-				<Component />
-			</StrictMode>
+			<Component />
 		)
 	}
 }

@@ -59,6 +59,10 @@ export abstract class AbstractComponent<
 		this._presenter.unmount()
 	}
 
+	public innerComponentUnmount(): void {
+		// Unsubscribe all listeners from state
+	}
+
 	public getRenderComponentByState(state: ComponentRenderStatesEnum): TRenderComponent {
 		switch (state) {
 			case ComponentRenderStatesEnum.LOADING: return this._getLoadingRenderComponent()
@@ -69,7 +73,7 @@ export abstract class AbstractComponent<
 	}
 
 	// Hook for setting other props for component
-	protected _getComponentsProps() {
+	protected _getComponentsProps(): TComponentProps {
 		return {} as TComponentProps
 	}
 

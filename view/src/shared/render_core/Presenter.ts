@@ -35,9 +35,6 @@ export class Presenter<
 
 	public beforeMount(setComponentState: (state: ComponentRenderStatesEnum) => void): void {
 		if (this._data !== undefined) {
-
-			setComponentState(ComponentRenderStatesEnum.LOADING)
-
 			this._data?.getData(this._state)
 				.then(() => {
 					this._data?.beforeMount(this._state)
@@ -46,6 +43,8 @@ export class Presenter<
 				.catch(() => {
 					setComponentState(ComponentRenderStatesEnum.DATA_IS_NOT_LOADED)
 				})
+		} else {
+			setComponentState(ComponentRenderStatesEnum.IS_READY_FOR_MOUNTING)
 		}
 	}
 
