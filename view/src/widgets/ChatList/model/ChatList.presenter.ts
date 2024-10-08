@@ -11,6 +11,7 @@ interface IChatListPresenterPayload {
 export type ChatListEventEmitterKeys = 'setCurrentChat'
 
 export class ChatListPresenter extends Presenter<IChatListStateObject, ChatListState, ChatListData, ChatListEventEmitterKeys> {
+
 	private __setCurrentChatCallback: IChatListPresenterPayload['setCurrentChat']
 
 	constructor(state: ChatListState, data: ChatListData, payload: IChatListPresenterPayload) {

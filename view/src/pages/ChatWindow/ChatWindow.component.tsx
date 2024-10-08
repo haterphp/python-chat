@@ -11,6 +11,7 @@ export interface IChatWindowComponentProps extends IComponentProps {
 }
 
 export default class ChatWindowComponent extends ReactComponent<ChatWindowPresenter, {}, ChatWindowState, any, IChatWindowComponentProps> {
+
 	constructor() {
 		super(new ChatWindowPresenter(new ChatWindowState()))
 	}
@@ -26,4 +27,5 @@ export default class ChatWindowComponent extends ReactComponent<ChatWindowPresen
 	protected _getRenderComponent(props: IAbstractComponentProps<{}, IChatWindowComponentProps>): FC {
 		return ChatWindowRenderComponent(props)
 	}
+
 }

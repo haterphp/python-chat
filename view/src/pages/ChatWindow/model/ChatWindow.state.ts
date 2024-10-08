@@ -6,6 +6,7 @@ export interface IChatWindowState {
 }
 
 export class ChatWindowState extends ComponentState<IChatWindowState> {
+
 	constructor() {
 		super({ selectedChat: null })
 	}
@@ -13,4 +14,5 @@ export class ChatWindowState extends ComponentState<IChatWindowState> {
 	public setSelectedChat(selectedChat: ChatSchema | null): void {
 		this._setStateValue('selectedChat', () => selectedChat)
 	}
+
 }

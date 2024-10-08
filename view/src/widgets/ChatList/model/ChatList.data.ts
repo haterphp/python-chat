@@ -11,8 +11,10 @@ const STUB_CHATS_LIST = [
 ]
 
 export class ChatListData extends AbstractData<ChatListState, IChatListStateObject> {
+
 	public async getData(state: ChatListState): Promise<void> {
 		const data = await sleepResolve(1500, Promise.all(STUB_CHATS_LIST))
 		state.setChatsList(data)
 	}
+
 }

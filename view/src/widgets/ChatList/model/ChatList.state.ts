@@ -6,6 +6,7 @@ export interface IChatListStateObject {
 }
 
 export class ChatListState extends ComponentState<IChatListStateObject> {
+
 	constructor() {
 		super({ chatsList: [] })
 	}
@@ -21,4 +22,5 @@ export class ChatListState extends ComponentState<IChatListStateObject> {
 
 		return null
 	}
+
 }

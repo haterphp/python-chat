@@ -15,6 +15,7 @@ interface IChatListComponentPayload {
 }
 
 class ChatListComponent extends ReactComponent<ChatListPresenter, IChatListStateObject, ChatListState, ChatListData> {
+
 	constructor(payload: IChatListComponentPayload) {
 		const presenter = new ChatListPresenter(
 			new ChatListState(),
@@ -32,5 +33,6 @@ class ChatListComponent extends ReactComponent<ChatListPresenter, IChatListState
 	protected _getLoadingRenderComponent(): FC {
 		return ChatListSkeleton
 	}
+
 }
 export default ChatListComponent
