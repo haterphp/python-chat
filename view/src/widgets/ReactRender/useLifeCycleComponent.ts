@@ -7,7 +7,7 @@ interface ILifeCycleHooks {
 	afterMount?: () => void
 }
 
-export const useLifeCycleComponent = <TStateObject extends object>(component: IAbstractComponentProps<TStateObject>, hooks?: ILifeCycleHooks): void => {
+export const useLifeCycleComponent = (component: IAbstractComponentProps<any, any, any>, hooks?: ILifeCycleHooks): void => {
 	const { componentMountedCallback, componentUnMountedCallback } = component
 
 	useEffect(() => {

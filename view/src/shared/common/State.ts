@@ -43,6 +43,14 @@ export class State<TState extends object = object> implements IClassLifeCycle {
 		})
 	}
 
+	public unsubscribeFromStateChanges(callback: ISubsriber<TState>): void {
+		this._eventEmmitter.unsubscribe(STATE_HAS_CHANGED_EVENT_KEY, callback)
+	}
+
+	public unsubscribeFromKeyStateChanges<TKey extends keyof TState>(key: TKey, callback: ISubsriber<TState[TKey]>): void {
+		this._eventEmmitter.unsubscribe(STATE_KEY_HAS_CHANGED_EVENT_KEY(key.toString()), callback)
+	}
+
 	public mount(): void {
 		this._eventEmmitter.emit(STATE_HAS_CHANGED_EVENT_KEY, this.__state)
 	}

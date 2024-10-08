@@ -1,6 +1,6 @@
 import { AbstractData } from "@shared/common/Data";
 import { Presenter } from "../Presenter";
-import { AbstractComponent } from "./AbstractComponent";
+import { AbstractComponent, IComponentProps } from "./AbstractComponent";
 import { ComponentState } from "../states/ComponentState";
 import { FC } from "react";
 
@@ -9,7 +9,8 @@ export abstract class ReactComponent<
 	TStateObject extends object,
 	TState extends ComponentState<TStateObject>,
 	TData extends AbstractData<TState, TStateObject>,
-> extends AbstractComponent<FC, TPresenter, TStateObject, TState, TData> {
+	TComponentProps extends IComponentProps = IComponentProps
+> extends AbstractComponent<FC, TPresenter, TStateObject, TState, TData, TComponentProps> {
 	protected _getErrorRenderComponent(): FC {
 		return () => null
 	}

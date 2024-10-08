@@ -37,20 +37,14 @@ export abstract class AbstractComponentRenderAdapter<
 
 		this.__componentRenderState.subscribeToCurrentValueStateKeyChanges(
 			'state',
-			ComponentRenderStatesEnum.IS_READY_FOR_MOUNTING,
+			ComponentRenderStatesEnum.READY_FOR_MOUNTING,
 			this.mount.bind(this)
 		)
 
 		this.__componentRenderState.subscribeToCurrentValueStateKeyChanges(
 			'state',
-			ComponentRenderStatesEnum.IS_MOUNTED,
+			ComponentRenderStatesEnum.MOUNTED,
 			this.afterMount.bind(this)
-		)
-
-		this.__componentRenderState.subscribeToCurrentValueStateKeyChanges(
-			'state',
-			ComponentRenderStatesEnum.IS_INNER_COMPONENT_UNMOUNTED,
-			this.__component.innerComponentUnmount.bind(this)
 		)
 
 		this.__component.setComponentRenderState(this.__componentRenderState)
@@ -61,7 +55,7 @@ export abstract class AbstractComponentRenderAdapter<
 		this.__componentRenderState.mount()
 		this.__component.mount()
 
-		this.__componentRenderState.setComponentState(ComponentRenderStatesEnum.IS_MOUNTING)
+		this.__componentRenderState.setComponentState(ComponentRenderStatesEnum.MOUNTING)
 	}
 
 	public afterMount(): void {

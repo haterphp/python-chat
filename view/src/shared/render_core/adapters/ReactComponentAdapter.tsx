@@ -17,7 +17,13 @@ export class ReactComponentRenderAdapter<
 
 	protected __injectToRoot(root: Root, Component: FC): void {
 		root.render(
-			<Component />
+			<StrictMode>
+				<Component />
+			</StrictMode>
 		)
+	}
+
+	protected __unmountRoot(root: Root): void {
+		root.unmount()
 	}
 }

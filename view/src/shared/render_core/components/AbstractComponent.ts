@@ -4,22 +4,27 @@ import { ComponentRenderState, ComponentRenderStatesEnum } from "../states/Rende
 import { AbstractData } from "@shared/common/Data";
 import { ComponentState } from "../states/ComponentState";
 
-type IComponentProps = Record<string, string | boolean | number | Function>
+export type IComponentProps = Record<string, unknown>
 
 interface IRenderComponentProps {
 	componentMountedCallback(): void
 	componentUnMountedCallback(): void
 }
 
-export type IAbstractComponentProps<TStateObject extends object> = IComponentProps & IPresenterProps<TStateObject> & IRenderComponentProps
+export type IAbstractComponentProps<
+	TStateObject extends object = {},
+	TComponentProps extends IComponentProps = IComponentProps,
+	TEventEmitterSubscriberNames extends string = string
+> = TComponentProps & IPresenterProps<TStateObject, TEventEmitterSubscriberNames> & IRenderComponentProps
 
 export abstract class AbstractComponent<
 	TRenderComponent,
-	TPresenter extends Presenter<TStateObject, TState, TData>,
+	TPresenter extends Presenter<TStateObject, TState, TData, TEventEmitterSubscriberNames>,
 	TStateObject extends object,
 	TState extends ComponentState<TStateObject>,
 	TData extends AbstractData<TState, TStateObject>,
-	TComponentProps extends IComponentProps = IComponentProps
+	TComponentProps extends IComponentProps = IComponentProps,
+	TEventEmitterSubscriberNames extends string = string
 > implements IClassLifeCycle {
 
 	protected _presenter: TPresenter
@@ -39,29 +44,29 @@ export abstract class AbstractComponent<
 		if (this.__componentRenderState === null)
 			throw new Error(`CompnentRenderState is not found in ${this.constructor.name}`)
 
-		console.log("DEBUG: [%s] beforeMount", this.constructor.name)
+		console.debug("DEBUG: [%s] beforeMount", this.constructor.name)
 
 		this._presenter.beforeMount(this.__componentRenderState.setComponentState.bind(this.__componentRenderState))
 	}
 
 	public mount(): void {
-		console.log("DEBUG: [%s] mount", this.constructor.name)
+		console.debug("DEBUG: [%s] mount", this.constructor.name)
+
 		this._presenter.mount()
 	}
 
 	public afterMount(): void {
-		console.log("DEBUG: [%s] afterMount", this.constructor.name)
+		console.debug("DEBUG: [%s] afterMount", this.constructor.name)
+
 		this._presenter.afterMount()
 	}
 
 	public unmount(): void {
-		console.log("DEBUG: [%s] unmount", this.constructor.name)
+		console.debug("DEBUG: [%s] unmount", this.constructor.name)
+
 		this._presenter.unmount()
 	}
 
-	public innerComponentUnmount(): void {
-		// Unsubscribe all listeners from state
-	}
 
 	public getRenderComponentByState(state: ComponentRenderStatesEnum): TRenderComponent {
 		switch (state) {
@@ -78,7 +83,7 @@ export abstract class AbstractComponent<
 	}
 
 	// Component render component if data has received
-	protected abstract _getRenderComponent(props: IAbstractComponentProps<TStateObject>): TRenderComponent
+	protected abstract _getRenderComponent(props: IAbstractComponentProps<TStateObject, TComponentProps, TEventEmitterSubscriberNames>): TRenderComponent
 
 	// Error fallback
 	protected abstract _getErrorRenderComponent(): TRenderComponent
@@ -86,8 +91,13 @@ export abstract class AbstractComponent<
 	// Error fallback
 	protected abstract _getLoadingRenderComponent(): TRenderComponent
 
+	private __unmountChildComponent(): void {
+		console.debug("DEBUG: [%s] child component unmount", this.constructor.name)
 
-	private __getComponentsPropsFactory(): IAbstractComponentProps<TStateObject> {
+		this._presenter.unmountChildComponent()
+	}
+
+	private __getComponentsPropsFactory(): IAbstractComponentProps<TStateObject, TComponentProps, TEventEmitterSubscriberNames> {
 		return Object.assign(
 			{},
 			this._getComponentsProps(),
@@ -96,14 +106,13 @@ export abstract class AbstractComponent<
 		)
 	}
 
-
 	private __getRenderComponentProps(): IRenderComponentProps {
 		if (this.__componentRenderState === null)
 			throw new Error(`CompnentRenderState is not found in ${this.constructor.name}`)
 
 		return {
-			componentMountedCallback: () => this.__componentRenderState?.setComponentState(ComponentRenderStatesEnum.IS_MOUNTED),
-			componentUnMountedCallback: () => this.__componentRenderState?.setComponentState(ComponentRenderStatesEnum.IS_INNER_COMPONENT_UNMOUNTED)
+			componentMountedCallback: () => this.__componentRenderState?.setComponentState(ComponentRenderStatesEnum.MOUNTED),
+			componentUnMountedCallback: this.__unmountChildComponent.bind(this)
 		}
 	}
 

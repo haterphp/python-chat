@@ -1,17 +1,17 @@
 type ISubsriber<TPayload> = (payload: TPayload) => void
 
-class EventEmitter {
-	private __subscribers: Array<[string, ISubsriber<any>]>
+class EventEmitter<TSubsriberNames extends string = string> {
+	private __subscribers: Array<[TSubsriberNames, ISubsriber<any>]>
 
 	constructor () {
 		this.__subscribers = []
 	}
 
-	public subscribe<TPayload>(subscriberName: string, subscriberCallback: ISubsriber<TPayload>): void {
+	public subscribe<TPayload>(subscriberName: TSubsriberNames, subscriberCallback: ISubsriber<TPayload>): void {
 		this.__subscribers.push([subscriberName, subscriberCallback])
 	}
 
-	public unsubscribe<TPayload>(subscriberName: string, subscriberCallback: ISubsriber<TPayload>): void {
+	public unsubscribe<TPayload>(subscriberName: TSubsriberNames, subscriberCallback: ISubsriber<TPayload>): void {
 		const subscribersWithoutRemoved = this.__subscribers.filter(([name, callback]) => 	subscriberName != name
 																						&& subscriberCallback != callback)
 		this.__subscribers = subscribersWithoutRemoved
@@ -23,7 +23,7 @@ class EventEmitter {
 		}
 	}
 
-	public emit(subscriberName: string, payload: any): void {
+	public emit(subscriberName: TSubsriberNames, payload: any): void {
 		const subscriberWhoRecieveUpdate = this.__subscribers.filter(([name]) => subscriberName == name)
 
 		for (const [_, subscriberCallback] of subscriberWhoRecieveUpdate) {

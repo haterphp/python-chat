@@ -4,8 +4,9 @@ import { useState } from "react";
 import ChatListitem from "./ui/ChatListItem.component";
 import { IAbstractComponentProps } from "@shared/render_core/components/AbstractComponent";
 import { ChatSchema } from "@data/chats/schemas/ChatSchema";
+import { ChatListEventEmitterKeys } from "./model/ChatList.presenter";
 
-export default function ChatListRenderComponent(props: IAbstractComponentProps<IChatListStateObject>) {
+export default function ChatListRenderComponent(props: IAbstractComponentProps<IChatListStateObject, {}, ChatListEventEmitterKeys>) {
 	return () => {
 		const [chatsList, setChatLists] = useState<IChatListStateObject['chatsList']>([])
 
@@ -24,7 +25,7 @@ export default function ChatListRenderComponent(props: IAbstractComponentProps<I
 		useLifeCycleComponent(props, { beforeMount })
 
 		const handleOnChatItemClick = (chatId: ChatSchema['id']) => {
-			emitAction('CALL_FROM_REACT', chatId)
+			emitAction('setCurrentChat', chatId)
 		}
 
 		return (

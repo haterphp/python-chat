@@ -10,18 +10,15 @@ export class ChatListState extends ComponentState<IChatListStateObject> {
 		super({ chatsList: [] })
 	}
 
-	public setChatsList(chats: IChatListStateObject['chatsList']): void {
+	public setChatsList(chats: ChatSchema[]): void {
 		this._setStateValue('chatsList', () => chats)
 	}
 
-	public printChatListId(chatId: ChatSchema['id']): void {
-		const selectedChat = this.getStateValue('chatsList').find(item => item.id === chatId)
-
-		if (selectedChat !== undefined) {
-			this._setStateValue('chatsList', async (prevChats) => {
-				const newChat = await ChatSchema.new({ id: selectedChat.id, name: selectedChat.name })
-				return [...prevChats, newChat]
-			})
+	public findChatById(chatId: ChatSchema['id']): ChatSchema | null {
+		for (const chat of this.getStateValue('chatsList')) {
+			if (chat.id === chatId) return chat
 		}
+
+		return null
 	}
 }
