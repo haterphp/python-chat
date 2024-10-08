@@ -10,22 +10,18 @@ export default function ChatListRenderComponent(props: IAbstractComponentProps<I
 	return () => {
 		const [chatsList, setChatLists] = useState<IChatListStateObject['chatsList']>([])
 
-		const { emitAction } = props
-
 		const loadDataState = (state: IChatListStateObject) => {
-			console.log(state)
 			if (state.chatsList.length > 0) setChatLists(state.chatsList)
 		}
 
-		const beforeMount = () => {
-			props.subscribeToStateChanges(loadDataState)
-			props.subscribeToStateKeyChanges('chatsList', setChatLists)
-		}
-
-		useLifeCycleComponent(props, { beforeMount })
+		useLifeCycleComponent(
+			props,
+			loadDataState,
+			[['chatsList', setChatLists]]
+		)
 
 		const handleOnChatItemClick = (chatId: ChatSchema['id']) => {
-			emitAction('setCurrentChat', chatId)
+			props.emitAction('setCurrentChat', chatId)
 		}
 
 		return (

@@ -1,19 +1,27 @@
-import { IAbstractComponentProps } from "@shared/render_core/components/AbstractComponent";
+import { IAbstractComponentProps, IComponentProps } from "@shared/render_core/components/AbstractComponent";
 import { useEffect } from "react";
 
-// Inner react component lifecycle
-interface ILifeCycleHooks {
-	beforeMount?: () => void
-	afterMount?: () => void
-}
+type StateChangesListener<
+	TStateObject extends object,
+	TKey extends keyof TStateObject = keyof TStateObject
+> = [TKey, (value: TStateObject[TKey]) => void]
 
-export const useLifeCycleComponent = (component: IAbstractComponentProps<any, any, any>, hooks?: ILifeCycleHooks): void => {
-	const { componentMountedCallback, componentUnMountedCallback } = component
+export const useLifeCycleComponent = <
+	TStateObject extends object = object,
+	TComponentProps extends IComponentProps = IComponentProps,
+	TEventEmitterSubscriberNames extends string = string
+>(
+	component: IAbstractComponentProps<TStateObject, TComponentProps, TEventEmitterSubscriberNames>,
+	loadStateCallback: (state: TStateObject) => void = (() => {}),
+	stateChangesListeners: StateChangesListener<TStateObject>[] = []
+): void => {
+	const { componentMountedCallback, componentUnMountedCallback, subscribeToStateChanges, subscribeToStateKeyChanges } = component
 
 	useEffect(() => {
-		hooks?.beforeMount?.()
+		subscribeToStateChanges(loadStateCallback)
+		stateChangesListeners.forEach(([key, callback]) => subscribeToStateKeyChanges(key, callback))
+
 		componentMountedCallback()
-		hooks?.afterMount?.()
 
 		return () => componentUnMountedCallback()
 	}, [])
