@@ -1,18 +1,39 @@
-import { ChatSchema } from "@data/chats/schemas/ChatSchema";
+import { ChatSchema } from "@widgets/ChatCommon/ChatSchema";
 import { ComponentState } from "@shared/render_core/states/ComponentState";
 
 export interface IChatWindowState {
 	selectedChat: ChatSchema | null
+	chats: ChatSchema[]
 }
 
 export class ChatWindowState extends ComponentState<IChatWindowState> {
 
 	constructor() {
-		super({ selectedChat: null })
+		super({ selectedChat: null, chats: [] })
 	}
 
-	public setSelectedChat(selectedChat: ChatSchema | null): void {
-		this._setStateValue('selectedChat', () => selectedChat)
+	public setChats(chats: ChatSchema[]): void {
+		this._setStateValue('chats', () => chats)
+	}
+
+	public setSelectedChat(chatId: ChatSchema['id'] | null): void {
+		if (chatId === null) {
+			this._setStateValue('selectedChat', () => null)
+			return
+		}
+
+		const findedChat = this.__findChatById(chatId)
+		if (findedChat !== null) {
+			this._setStateValue('selectedChat', () => findedChat)
+		}
+	}
+
+	public __findChatById(chatId: ChatSchema['id']): ChatSchema | null {
+		for (const chat of this._state.object.chats) {
+			if (chatId === chat.id) return chat
+		}
+
+		return null
 	}
 
 }

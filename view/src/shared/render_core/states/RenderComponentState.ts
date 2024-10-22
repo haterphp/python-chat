@@ -1,4 +1,4 @@
-import { State, STATE_KEY_HAS_CHANGED_EVENT_KEY } from "@shared/common/State"
+import { State } from "@shared/common/State"
 
 export enum ComponentRenderStatesEnum {
 	IDLE = 'idle',
@@ -22,7 +22,7 @@ export class ComponentRenderState extends State<IComponentRenderStateObject> {
 	}
 
 	public triggerRender(): void {
-		this._eventEmmitter.emit(STATE_KEY_HAS_CHANGED_EVENT_KEY('state'), this.getStateValue('state'))
+		this._state.emitKeyValue('state')
 	}
 
 	public setComponentState (newComponentState: ComponentRenderStatesEnum): void {

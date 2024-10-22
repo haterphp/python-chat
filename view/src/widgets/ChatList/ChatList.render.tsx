@@ -1,23 +1,25 @@
-import { IChatListStateObject } from "./model/ChatList.state";
 import { useLifeCycleComponent } from "@widgets/ReactRender/useLifeCycleComponent";
 import { useState } from "react";
 import ChatListitem from "./ui/ChatListItem.component";
 import { IAbstractComponentProps } from "@shared/render_core/components/AbstractComponent";
-import { ChatSchema } from "@data/chats/schemas/ChatSchema";
+import { ChatSchema } from "@widgets/ChatCommon/ChatSchema";
 import { ChatListEventEmitterKeys } from "./model/ChatList.presenter";
+import { IChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state";
 
-export default function ChatListRenderComponent(props: IAbstractComponentProps<IChatListStateObject, {}, ChatListEventEmitterKeys>) {
+export default function ChatListRenderComponent(props: IAbstractComponentProps<IChatWindowState, {}, ChatListEventEmitterKeys>) {
 	return () => {
-		const [chatsList, setChatLists] = useState<IChatListStateObject['chatsList']>([])
+		const { subscribeToStateChanges, subscribeToStateKeyChanges } = props
 
-		const loadDataState = (state: IChatListStateObject) => {
-			if (state.chatsList.length > 0) setChatLists(state.chatsList)
-		}
+		const [chatsList, setChatLists] = useState<IChatWindowState['chats']>([])
 
 		useLifeCycleComponent(
 			props,
-			loadDataState,
-			[['chatsList', setChatLists]]
+			() => {
+				subscribeToStateChanges((state) => {
+					if (state.chats.length > 0) setChatLists(state.chats)
+				})
+				subscribeToStateKeyChanges('chats', setChatLists)
+			}
 		)
 
 		const handleOnChatItemClick = (chatId: ChatSchema['id']) => {

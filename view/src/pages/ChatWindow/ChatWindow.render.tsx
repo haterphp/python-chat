@@ -1,5 +1,4 @@
 import { IAbstractComponentProps } from "@shared/render_core/components/AbstractComponent"
-import ApplicationRouter, { ApplicationRoutes } from "@shared/router/routers/ApplicationRouter"
 import { useInsert } from "@widgets/ReactRender/useInsert"
 import { useLifeCycleComponent } from "@widgets/ReactRender/useLifeCycleComponent"
 import { IChatWindowComponentProps } from "./ChatWindow.component"
@@ -19,7 +18,7 @@ export default function ChatWindowRenderComponent (props: IAbstractComponentProp
 
 					{/* Chat */}
 					<div className="chat_window_layout__content">
-						<button onClick={() => ApplicationRouter.navigate(ApplicationRoutes.SANDBOX)}>To sandbox</button>
+						{useInsert(props.ChatComponent)}
 					</div>
 				</div>
 			</div>

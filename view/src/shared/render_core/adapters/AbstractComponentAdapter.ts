@@ -29,26 +29,26 @@ export abstract class AbstractComponentRenderAdapter<
 	public beforeMount(rootContainer: HTMLElement): void {
 		this.__root = this.__defineRoot(rootContainer)
 
-		this.__componentRenderState.subscribeToCurrentValueStateKeyChanges(
+		this.__componentRenderState.subscribeToStateKeyChanges(
 			'state',
+			this.__render.bind(this),
 			SHOULD_CALL_RENDER_STATES,
-			this.__render.bind(this)
 		)
 
-		this.__componentRenderState.subscribeToCurrentValueStateKeyChanges(
+		this.__componentRenderState.subscribeToStateKeyChanges(
 			'state',
-			ComponentRenderStatesEnum.READY_FOR_MOUNTING,
-			this.mount.bind(this)
+			this.mount.bind(this),
+			[ComponentRenderStatesEnum.READY_FOR_MOUNTING],
 		)
 
-		this.__componentRenderState.subscribeToCurrentValueStateKeyChanges(
+		this.__componentRenderState.subscribeToStateKeyChanges(
 			'state',
-			ComponentRenderStatesEnum.MOUNTED,
-			this.afterMount.bind(this)
+			this.afterMount.bind(this),
+			[ComponentRenderStatesEnum.MOUNTED],
 		)
 
 		this.__component.setComponentRenderState(this.__componentRenderState)
-		this.__component.beforeMount()
+		this.__component.__beforeMount()
 	}
 
 	public mount(): void {

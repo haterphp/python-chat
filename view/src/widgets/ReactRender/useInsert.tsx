@@ -11,7 +11,6 @@ export const useInsert = (component: ReactComponent<any, any, any, any>) => {
 		if (ref.current) unmountCallback = renderReactComponent(ref.current, component)
 
 		return () => {
-			console.log(unmountCallback)
 			unmountCallback?.()
 		}
 	}, [ref.current])

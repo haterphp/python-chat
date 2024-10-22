@@ -40,13 +40,13 @@ export abstract class AbstractComponent<
 		this.__componentRenderState = renderstate
 	}
 
-	public beforeMount(): void {
+	public __beforeMount(): void {
 		if (this.__componentRenderState === null)
 			throw new Error(`CompnentRenderState is not found in ${this.constructor.name}`)
 
 		console.debug("DEBUG: [%s] beforeMount", this.constructor.name)
 
-		this._presenter.beforeMount(this.__componentRenderState.setComponentState.bind(this.__componentRenderState))
+		this._presenter.__beforeMount(this.__componentRenderState.setComponentState.bind(this.__componentRenderState))
 	}
 
 	public mount(): void {

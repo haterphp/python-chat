@@ -1,4 +1,4 @@
-import { IClassLifeCycle } from "./Lifecycle";
+import { IClassLifeCycle } from "@shared/common/Lifecycle";
 import { State } from "./State";
 
 
@@ -7,19 +7,27 @@ export abstract class AbstractData<
 	TStateObject extends object = object,
 > implements IClassLifeCycle {
 
-	public beforeMount(state: TState): void {
-		if (this._subscirbeSockets) this._subscirbeSockets(state)
+	protected _state: TState
+
+	constructor(state: TState) {
+		this._state = state
 	}
 
-	public mount() {}
-
-	public unmount(): void {
-		if (this._unsubscirbeSockets) this._unsubscirbeSockets()
+	public beforeMount(): Promise<void> {
+		return Promise.resolve()
 	}
 
-	public abstract getData(state: TState): Promise<void>
+	public mount(): Promise<void> {
+		if (this._subscirbeSockets !== undefined) this._subscirbeSockets()
+		return Promise.resolve()
+	}
 
-	protected _subscirbeSockets?(state: TState): void
+	public unmount(): Promise<void> {
+		if (this._unsubscirbeSockets !== undefined) this._unsubscirbeSockets()
+		return Promise.resolve()
+	}
+
+	protected _subscirbeSockets?(): void
 
 	protected _unsubscirbeSockets?(): void
 }

@@ -1,5 +1,5 @@
 import { AbstractComponentRenderAdapter } from "@shared/render_core/adapters/AbstractComponentAdapter";
-import { State, STATE_KEY_HAS_CHANGED_EVENT_KEY } from "../common/State";
+import { State } from "../common/State";
 import { Presenter } from "@shared/render_core/Presenter";
 
 export interface IRoute {
@@ -20,7 +20,7 @@ export class RouterState extends State<IRouterStateObject> {
 
 	public mount(): void {
 		super.mount()
-		this._eventEmmitter.emit(STATE_KEY_HAS_CHANGED_EVENT_KEY('routeName'), this.getStateValue('routeName'))
+		// this._eventEmmitter.emit(STATE_KEY_HAS_CHANGED_EVENT_KEY('routeName'), this.getStateValue('routeName'))
 	}
 
 	public setNewCurrentRoute (route: string): void {

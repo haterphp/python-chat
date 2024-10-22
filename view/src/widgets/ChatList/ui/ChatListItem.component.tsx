@@ -1,6 +1,6 @@
 import Avatar from "@app/components/avatar/Avatar.component"
 import { TextColors } from "@app/components/common/Colors"
-import { ChatSchema } from "@data/chats/schemas/ChatSchema"
+import { ChatSchema } from "@widgets/ChatCommon/ChatSchema"
 
 interface IChatListItemProps {
 	chat: ChatSchema

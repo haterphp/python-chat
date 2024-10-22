@@ -5,17 +5,14 @@ import { ComponentRenderStatesEnum } from "@shared/render_core/states/RenderComp
 import { ComponentState } from "./states/ComponentState";
 import { STATE_HAS_CHANGED_EVENT_KEY } from "@shared/common/State";
 
-
 export interface IPresenterProps<
 	TStateObject extends object = object,
 	TEventEmitterSubscriberNames extends string = string
 > {
-	getState(): TStateObject
-
 	emitAction(name: TEventEmitterSubscriberNames, payload?: any): void
 
 	subscribeToStateChanges(callback: ISubsriber<TStateObject>): void
-	subscribeToStateKeyChanges(eventName: keyof TStateObject, callback: ISubsriber<TStateObject[typeof eventName]>): void
+	subscribeToStateKeyChanges<TKey extends keyof TStateObject>(eventName: TKey, callback: ISubsriber<TStateObject[TKey]>): void
 }
 
 export class Presenter<
@@ -42,11 +39,10 @@ export class Presenter<
 		this.__childComponentSubscribers = []
 	}
 
-	public beforeMount(setComponentState: (state: ComponentRenderStatesEnum) => void): void {
+	public __beforeMount(setComponentState: (state: ComponentRenderStatesEnum) => void): void {
 		if (this._data !== undefined) {
-			this._data?.getData(this._state)
+			this._data?.beforeMount()
 				.then(() => {
-					this._data?.beforeMount(this._state)
 					setComponentState(ComponentRenderStatesEnum.READY_FOR_MOUNTING)
 				})
 				.catch(() => {
@@ -84,9 +80,6 @@ export class Presenter<
 		return {
 			emitAction: this._eventEmitter.emit.bind(this._eventEmitter),
 
-			// Get actual state
-			getState: this._state.getState.bind(this._state),
-
 			// Subscribe to state changes
 			subscribeToStateChanges: this.__subscribeToStateChanges.bind(this),
 			subscribeToStateKeyChanges: this.__subscribeToStateKeyChanges.bind(this),
@@ -100,6 +93,6 @@ export class Presenter<
 
 	private __subscribeToStateKeyChanges<TKey extends keyof TStateObject>(key: TKey, callback: ISubsriber<TStateObject[TKey]>): void {
 		this.__childComponentSubscribers.push([key as string, callback])
-		this._state.subscribeToStateKeyChanges(key, callback)
+		this._state.subscribeToStateKeyChanges<TKey>(key, callback)
 	}
 }

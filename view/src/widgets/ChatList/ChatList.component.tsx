@@ -4,29 +4,22 @@ import ChatListSkeleton from "./ui/ChatListSkeleton.component"
 import ChatListRenderComponent from "./ChatList.render"
 
 import { ChatListPresenter } from "./model/ChatList.presenter"
-import { ChatListState, IChatListStateObject } from "./model/ChatList.state"
 import { ChatListData } from "./model/ChatList.data"
 import { IAbstractComponentProps } from "@shared/render_core/components/AbstractComponent"
 import { ReactComponent } from "@shared/render_core/components/ReactComponent"
-import { ChatSchema } from "@data/chats/schemas/ChatSchema"
+import { ChatWindowState, IChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state"
 
 interface IChatListComponentPayload {
-	setCurrentChat: (chat: ChatSchema) => void
+	windowState: ChatWindowState
 }
 
-class ChatListComponent extends ReactComponent<ChatListPresenter, IChatListStateObject, ChatListState, ChatListData> {
+export default class ChatListComponent extends ReactComponent<ChatListPresenter, IChatWindowState, ChatWindowState, ChatListData> {
 
 	constructor(payload: IChatListComponentPayload) {
-		const presenter = new ChatListPresenter(
-			new ChatListState(),
-			new ChatListData(),
-			{ setCurrentChat: payload.setCurrentChat}
-		)
-
-		super(presenter)
+		super(new ChatListPresenter(payload.windowState, new ChatListData(payload.windowState)))
 	}
 
-	protected _getRenderComponent(props: IAbstractComponentProps<IChatListStateObject>): FC {
+	protected _getRenderComponent(props: IAbstractComponentProps<IChatWindowState>): FC {
 		return ChatListRenderComponent(props)
 	}
 
@@ -35,4 +28,3 @@ class ChatListComponent extends ReactComponent<ChatListPresenter, IChatListState
 	}
 
 }
-export default ChatListComponent

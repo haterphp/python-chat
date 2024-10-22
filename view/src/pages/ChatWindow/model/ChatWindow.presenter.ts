@@ -1,23 +1,20 @@
-import { ChatSchema } from "@data/chats/schemas/ChatSchema";
+import { ChatSchema } from "@widgets/ChatCommon/ChatSchema";
 import { ChatWindowState } from "./ChatWindow.state";
 import { Presenter } from "@shared/render_core/Presenter";
 import { KeyCodes } from "@shared/enums/KeyCodes";
+import { ComponentRenderStatesEnum } from "@shared/render_core/states/RenderComponentState";
 
 type Actions = 'setCurrentChat'
 
 export class ChatWindowPresenter extends Presenter<{}, ChatWindowState, any, Actions> {
 
 	public mount(): void {
-		this._state.subscribeToStateKeyChanges('selectedChat', (chat) => console.log(chat))
 		document.addEventListener('keyup', this.__resetCurrentChat.bind(this))
+		this._state.subscribeToStateKeyChanges('selectedChat', (chat) => console.log(chat))
 	}
 
 	public unmount(): void {
 		document.removeEventListener('keyup', this.__resetCurrentChat.bind(this))
-	}
-
-	public setCurrentChat(chat: ChatSchema): void {
-		this._state.setSelectedChat(chat)
 	}
 
 	private __resetCurrentChat(event: KeyboardEvent): void {

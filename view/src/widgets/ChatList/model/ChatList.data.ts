@@ -1,7 +1,7 @@
 import { AbstractData } from "@shared/common/Data";
-import { ChatListState, IChatListStateObject } from "./ChatList.state";
-import { ChatSchema } from "@data/chats/schemas/ChatSchema";
+import { ChatSchema } from "@widgets/ChatCommon/ChatSchema";
 import { sleepResolve } from "@shared/helpers";
+import { ChatWindowState, IChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state";
 
 const STUB_CHATS_LIST = [
 	ChatSchema.new({ id: 1, name: 'Test 1' }),
@@ -10,11 +10,11 @@ const STUB_CHATS_LIST = [
 	ChatSchema.new({ id: 4, name: 'Test 4' }),
 ]
 
-export class ChatListData extends AbstractData<ChatListState, IChatListStateObject> {
+export class ChatListData extends AbstractData<ChatWindowState, IChatWindowState> {
 
-	public async getData(state: ChatListState): Promise<void> {
+	public async beforeMount(): Promise<void> {
 		const data = await sleepResolve(1500, Promise.all(STUB_CHATS_LIST))
-		state.setChatsList(data)
+		this._state.setChats(data)
 	}
 
 }

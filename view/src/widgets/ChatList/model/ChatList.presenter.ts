@@ -1,23 +1,14 @@
 import { Presenter } from "../../../shared/render_core/Presenter";
 
-import { ChatListState, IChatListStateObject } from "./ChatList.state";
 import { ChatListData } from "./ChatList.data";
-import { ChatSchema } from "@data/chats/schemas/ChatSchema";
-
-interface IChatListPresenterPayload {
-	setCurrentChat: (chat: ChatSchema) => void
-}
+import { ChatSchema } from "@widgets/ChatCommon/ChatSchema";
+import { ChatWindowState, IChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state";
 
 export type ChatListEventEmitterKeys = 'setCurrentChat'
 
-export class ChatListPresenter extends Presenter<IChatListStateObject, ChatListState, ChatListData, ChatListEventEmitterKeys> {
-
-	private __setCurrentChatCallback: IChatListPresenterPayload['setCurrentChat']
-
-	constructor(state: ChatListState, data: ChatListData, payload: IChatListPresenterPayload) {
+export class ChatListPresenter extends Presenter<IChatWindowState, ChatWindowState, ChatListData, ChatListEventEmitterKeys> {
+	constructor(state: ChatWindowState, data: ChatListData, ) {
 		super(state, data)
-
-		this.__setCurrentChatCallback = payload.setCurrentChat
 	}
 
 	public mount(): void {
@@ -25,7 +16,6 @@ export class ChatListPresenter extends Presenter<IChatListStateObject, ChatListS
 	}
 
 	private __setCurrentChat(chatId: ChatSchema['id']): void {
-		const chat = this._state.findChatById(chatId)
-		if (chat !== null) this.__setCurrentChatCallback(chat)
+		this._state.setSelectedChat(chatId)
 	}
 }
