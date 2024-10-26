@@ -1,5 +1,4 @@
 import { IClassLifeCycle } from "../common/Lifecycle";
-import { ISubsriber } from "../common/EventEmitter";
 import { IRoute, RouterState } from "./Router.state";
 
 export abstract class CommonRouter implements IClassLifeCycle {
@@ -17,11 +16,11 @@ export abstract class CommonRouter implements IClassLifeCycle {
 		this._routerState.unmount()
 	}
 
-	public onRouteChanged(callback: ISubsriber<IRoute | null>): void {
-		this._routerState.subscribeToStateKeyChanges(
-			'routeName',
-			(route) => callback(this.__getCurrentRoute(route))
-		)
+	public onRouteChanged(): void {
+		// this._routerState.subscribeToStateKeyChanges(
+		// 	'routeName',
+		// 	(route) => callback(this.__getCurrentRoute(route))
+		// )
 	}
 
 	public navigate(route: string): void {
@@ -31,7 +30,7 @@ export abstract class CommonRouter implements IClassLifeCycle {
 	protected abstract _getRoutes(): IRoute[]
 
 	private __getCurrentRoute(findingRoute: string): IRoute | null {
-		const allRoutes = this._routerState.getStateValue('routes')
+		const allRoutes = this._routerState.getStateObject().routes
 
 		for (const route of allRoutes) {
 			if (route.routeId === findingRoute) return route

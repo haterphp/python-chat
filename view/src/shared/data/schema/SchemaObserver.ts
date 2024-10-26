@@ -1,4 +1,4 @@
-import { EventEmitter } from "@shared/common/EventEmitter";
+import { EventEmitter } from "@shared/common/ee/EventEmitter";
 import { ObjectObserver } from "@shared/common/ObjectObserver";
 
 type ValidateDataCallback = () => Promise<void>

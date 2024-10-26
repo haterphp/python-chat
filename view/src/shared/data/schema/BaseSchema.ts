@@ -1,4 +1,4 @@
-import { EventEmitter } from "@shared/common/EventEmitter";
+import { EventEmitter } from "@shared/common/ee/EventEmitter";
 import { validate } from "class-validator";
 import { SchemaObserver } from "./SchemaObserver";
 

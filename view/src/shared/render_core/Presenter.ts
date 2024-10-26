@@ -1,9 +1,11 @@
 import { IClassLifeCycle } from "../common/Lifecycle";
 import { AbstractData } from "../common/Data";
-import { EventEmitter, ISubsriber } from "../common/EventEmitter";
+import { EventEmitter } from "../common/ee/EventEmitter";
 import { ComponentRenderStatesEnum } from "@shared/render_core/states/RenderComponentState";
 import { ComponentState } from "./states/ComponentState";
-import { STATE_HAS_CHANGED_EVENT_KEY } from "@shared/common/State";
+import { STATE_HAS_CHANGED_EVENT_KEY, StateChangesSubsriber } from "@shared/common/state/StateChangesSubsriber";
+import { StateKeyChangesSubsriber } from "@shared/common/state/StateKeyChangesSubscriber";
+import { EventEmitterSubsriber } from "@shared/common/ee/EventEmitterSubsriber";
 
 export interface IPresenterProps<
 	TStateObject extends object = object,
@@ -11,8 +13,8 @@ export interface IPresenterProps<
 > {
 	emitAction(name: TEventEmitterSubscriberNames, payload?: any): void
 
-	subscribeToStateChanges(callback: ISubsriber<TStateObject>): void
-	subscribeToStateKeyChanges<TKey extends keyof TStateObject>(eventName: TKey, callback: ISubsriber<TStateObject[TKey]>): void
+	subscribeToStateChanges(subscriber: StateChangesSubsriber<TStateObject>): void
+	subscribeToStateKeyChanges<TKey extends keyof TStateObject>(subscriber: StateKeyChangesSubsriber<TStateObject, TKey>): void
 }
 
 export class Presenter<
@@ -28,7 +30,7 @@ export class Presenter<
 
 	protected _data?: TData
 
-	private __childComponentSubscribers: Array<[string, ISubsriber<any>]>
+	private __childComponentSubscribers: Array<EventEmitterSubsriber>
 
 	constructor (state: TState, data?: TData) {
 		this._state = state
@@ -70,9 +72,9 @@ export class Presenter<
 	}
 
 	public unmountChildComponent(): void {
-		for (const [key, callback] of this.__childComponentSubscribers) {
-			if (key === STATE_HAS_CHANGED_EVENT_KEY) this._state.unsubscribeFromStateChanges(callback)
-			else this._state.unsubscribeFromKeyStateChanges(key as keyof TStateObject, callback)
+		for (const s of this.__childComponentSubscribers) {
+			if (s.name === STATE_HAS_CHANGED_EVENT_KEY) this._state.unsubscribeFromStateChanges(s as StateChangesSubsriber<TStateObject>)
+			else this._state.unsubscribeFromKeyStateChanges(s as StateKeyChangesSubsriber<TStateObject>)
 		}
 	}
 
@@ -86,13 +88,13 @@ export class Presenter<
 		}
 	}
 
-	private __subscribeToStateChanges(callback: ISubsriber<TStateObject>): void {
-		this.__childComponentSubscribers.push([STATE_HAS_CHANGED_EVENT_KEY, callback])
-		this._state.subscribeToStateChanges(callback)
+	private __subscribeToStateChanges(subscriber: StateChangesSubsriber<TStateObject>): void {
+		this.__childComponentSubscribers.push(subscriber)
+		this._state.subscribeToStateChanges(subscriber)
 	}
 
-	private __subscribeToStateKeyChanges<TKey extends keyof TStateObject>(key: TKey, callback: ISubsriber<TStateObject[TKey]>): void {
-		this.__childComponentSubscribers.push([key as string, callback])
-		this._state.subscribeToStateKeyChanges<TKey>(key, callback)
+	private __subscribeToStateKeyChanges<TKey extends keyof TStateObject>(subscriber: StateKeyChangesSubsriber<TStateObject, TKey>): void {
+		this.__childComponentSubscribers.push(subscriber)
+		this._state.subscribeToStateKeyChanges<TKey>(subscriber)
 	}
 }

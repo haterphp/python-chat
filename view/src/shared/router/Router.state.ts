@@ -1,5 +1,5 @@
 import { AbstractComponentRenderAdapter } from "@shared/render_core/adapters/AbstractComponentAdapter";
-import { State } from "../common/State";
+import { State } from "../common/state/State";
 import { Presenter } from "@shared/render_core/Presenter";
 
 export interface IRoute {

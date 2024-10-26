@@ -4,6 +4,8 @@ import { IChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state"
 import { useEffect, useState } from "react"
 import { ChatSchema } from "@widgets/ChatCommon/ChatSchema"
 import { ChatMessageSchema } from "@widgets/ChatCommon/ChatMessageSchema"
+import { StateChangesSubsriber } from "@shared/common/state/StateChangesSubsriber"
+import { StateKeyChangesSubsriber } from "@shared/common/state/StateKeyChangesSubscriber"
 
 export default function ChatRenderComponent (props: IAbstractComponentProps<IChatWindowState>) {
 	return () => {
@@ -15,10 +17,10 @@ export default function ChatRenderComponent (props: IAbstractComponentProps<ICha
 		useLifeCycleComponent(
 			props,
 			() => {
-				subscribeToStateChanges((state) => {
+				subscribeToStateChanges(new StateChangesSubsriber((state) => {
 					setCurrentChat(state.selectedChat)
-				})
-				subscribeToStateKeyChanges('selectedChat', setCurrentChat)
+				}))
+				subscribeToStateKeyChanges(new StateKeyChangesSubsriber('selectedChat', setCurrentChat))
 			}
 		)
 

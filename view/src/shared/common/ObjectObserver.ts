@@ -1,4 +1,5 @@
-import { EventEmitter, ISubsriber } from "./EventEmitter"
+import { EventEmitter } from "./ee/EventEmitter"
+import { EventEmitterSubsriber } from "./ee/EventEmitterSubsriber"
 
 export class ObjectObserver<TObject extends object = object> {
 	private __object: TObject
@@ -23,11 +24,11 @@ export class ObjectObserver<TObject extends object = object> {
 		this.__eventEmitter.emit(key as string, this.__object[key])
 	}
 
-	public observeKey<TKey extends keyof TObject>(key: TKey, callback: ISubsriber<TObject[TKey]>, includesValue: Array<TObject[TKey]> = []): void {
-		this.__eventEmitter.subscribe(key as string, callback, includesValue)
+	public observeKey<TKey extends keyof TObject>(subscriber: EventEmitterSubsriber<TObject[TKey]>): void {
+		this.__eventEmitter.subscribe(subscriber)
 	}
 
-	public unobserveKey<TKey extends keyof TObject>(key: TKey, callback: ISubsriber<TObject[TKey]>): void {
-		this.__eventEmitter.unsubscribe(key as string, callback)
+	public unobserveKey<TKey extends keyof TObject>(subscriber: EventEmitterSubsriber<TObject[TKey]>): void {
+		this.__eventEmitter.unsubscribe(subscriber)
 	}
 }

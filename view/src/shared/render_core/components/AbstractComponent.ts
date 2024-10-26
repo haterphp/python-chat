@@ -93,7 +93,6 @@ export abstract class AbstractComponent<
 
 	private __unmountChildComponent(): void {
 		console.debug("DEBUG: [%s] child component unmount", this.constructor.name)
-
 		this._presenter.unmountChildComponent()
 	}
 

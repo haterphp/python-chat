@@ -1,5 +1,5 @@
 import { IClassLifeCycle } from "@shared/common/Lifecycle";
-import { State } from "./State";
+import { State } from "./state/State";
 
 
 export abstract class AbstractData<

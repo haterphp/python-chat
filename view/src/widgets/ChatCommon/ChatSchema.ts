@@ -9,9 +9,9 @@ interface ICreateChatSchema {
 
 export class ChatSchema extends BaseSchema<number> {
 
-	private readonly _name: string;
+	protected readonly _name: string;
 
-	private readonly _messages: ChatMessageSchema[];
+	protected readonly _messages: ChatMessageSchema[];
 
 	get name(): string {
 		return this._name

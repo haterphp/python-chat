@@ -1,4 +1,4 @@
-import { State } from "@shared/common/State"
+import { State } from "@shared/common/state/State"
 
 export enum ComponentRenderStatesEnum {
 	IDLE = 'idle',
@@ -12,7 +12,7 @@ export enum ComponentRenderStatesEnum {
 
 export const SHOULD_CALL_RENDER_STATES = [ComponentRenderStatesEnum.DATA_IS_NOT_LOADED, ComponentRenderStatesEnum.LOADING, ComponentRenderStatesEnum.MOUNTING]
 
-interface IComponentRenderStateObject {
+export interface IComponentRenderStateObject {
 	state: ComponentRenderStatesEnum
 }
 
