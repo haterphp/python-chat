@@ -1,6 +1,6 @@
 import { ChatWindowState, IChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state";
 import { AbstractData } from "@shared/common/Data";
-import { ChatMessageSchema } from "@widgets/ChatCommon/ChatMessageSchema";
+import { ChatMessageSchema } from "@widgets/ChatCommon/schemas/ChatMessageSchema";
 
 
 const STUB_CHATS_LIST = [
@@ -14,7 +14,7 @@ export class ChatData extends AbstractData<ChatWindowState, IChatWindowState> {
 
 		if (selectedChat !== null) {
 			const messages = await Promise.all(STUB_CHATS_LIST)
-			selectedChat.observer.update('messages', messages)
+			selectedChat.update('messages', messages)
 		}
 	}
 }

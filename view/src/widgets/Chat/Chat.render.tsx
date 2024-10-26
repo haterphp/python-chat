@@ -1,11 +1,12 @@
 import { IAbstractComponentProps } from "@shared/render_core/components/AbstractComponent"
 import { useLifeCycleComponent } from "@widgets/ReactRender/useLifeCycleComponent"
 import { IChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state"
-import { useEffect, useState } from "react"
-import { ChatSchema } from "@widgets/ChatCommon/ChatSchema"
-import { ChatMessageSchema } from "@widgets/ChatCommon/ChatMessageSchema"
+import { useEffect, useMemo, useState } from "react"
+import { ChatMessageSchema } from "@widgets/ChatCommon/schemas/ChatMessageSchema"
 import { StateChangesSubsriber } from "@shared/common/state/StateChangesSubsriber"
 import { StateKeyChangesSubsriber } from "@shared/common/state/StateKeyChangesSubscriber"
+import { ChatSchema } from "@widgets/ChatCommon/schemas/ChatSchema"
+import { ChatMessagesSubsriber } from "@widgets/ChatCommon/subscribers/ChatMessagesSubsriber"
 
 export default function ChatRenderComponent (props: IAbstractComponentProps<IChatWindowState>) {
 	return () => {
@@ -13,6 +14,8 @@ export default function ChatRenderComponent (props: IAbstractComponentProps<ICha
 
 		const [currentChat, setCurrentChat] = useState<ChatSchema | null>(null)
 		const [messages, setChatMessages] = useState<ChatMessageSchema[]>([])
+
+		const chatMessagesSubsriber = useMemo(() => new ChatMessagesSubsriber(setChatMessages), [])
 
 		useLifeCycleComponent(
 			props,
@@ -24,13 +27,12 @@ export default function ChatRenderComponent (props: IAbstractComponentProps<ICha
 			}
 		)
 
-		// useEffect(() => {
-		// 	if (currentChat !== null) {
-		// 		currentChat.observer.observeKey('messages', (messages) => console.log(messages))
-		// 	}
-		// }, [currentChat])
+		useEffect(() => {
+			if (currentChat !== null) currentChat.subsribe(chatMessagesSubsriber)
+			return () => currentChat?.unsubsribe(chatMessagesSubsriber)
+		}, [currentChat, chatMessagesSubsriber])
 
 		if (currentChat === null) return <>nothing here</>
-		return <>{currentChat.id}</>
+		return <>{messages.map((m) => m.content).join(', ')}</>
 	}
 }

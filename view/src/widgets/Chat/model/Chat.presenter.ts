@@ -1,8 +1,8 @@
 import { Presenter } from "@shared/render_core/Presenter";
 import { ChatWindowState, IChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state";
 import { ChatData } from "./Chat.data";
-import { ChatSchema } from "@widgets/ChatCommon/ChatSchema";
 import { StateKeyChangesSubsriber } from "@shared/common/state/StateKeyChangesSubscriber";
+import { ChatSchema } from "@widgets/ChatCommon/schemas/ChatSchema";
 
 export class ChatPresenter extends Presenter<IChatWindowState, ChatWindowState, ChatData> {
 	private __selectedChatSubsriber: StateKeyChangesSubsriber<IChatWindowState, 'selectedChat'>
@@ -17,7 +17,7 @@ export class ChatPresenter extends Presenter<IChatWindowState, ChatWindowState, 
 		this._state.subscribeToStateKeyChanges(this.__selectedChatSubsriber)
 	}
 
-	private async __loadCurrentChatData(currentChat: ChatSchema | null): Promise<void> {
+	private async __loadCurrentChatData(currentChat: ChatSchema| null): Promise<void> {
 		if (this._data !== undefined && currentChat !== null) {
 			await this._data.loadCurrentChat()
 		}

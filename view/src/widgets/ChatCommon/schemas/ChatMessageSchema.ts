@@ -6,7 +6,7 @@ interface ICreateChatMessagePayload {
 }
 
 export class ChatMessageSchema extends BaseSchema<number> {
-	private __content: string
+	protected __content: string
 
 	public get content(): string {
 		return this.__content
