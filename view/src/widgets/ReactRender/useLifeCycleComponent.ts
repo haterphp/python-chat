@@ -1,4 +1,4 @@
-import { IAbstractComponentProps, IComponentProps } from "@shared/render_core/components/AbstractComponent";
+import { IAbstractComponentProps, IComponentProps } from "@shared/Core/render_core/components/AbstractComponent";
 import { useEffect } from "react";
 
 export const useLifeCycleComponent = <

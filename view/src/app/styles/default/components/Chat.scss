@@ -2,7 +2,7 @@ $contact-list-color-hover: #292929;
 $contact-list-color-active: #292929;
 
 $contact-list-background-hover: #f7f7f7;
-$contact-list-background-active: $color-primary;
+$contact-list-background-active: $color-accent-background;
 
 // ------------ CHAT LIST ------------ //
 
@@ -29,8 +29,10 @@ $contact-list-background-active: $color-primary;
 		align-items: center;
 		gap: 1rem;
 
+		user-select: none;
 
-		&:not(&-skeleton):hover {
+
+		&:not(&-skeleton):not(&-active):hover {
 			color: $contact-list-color-hover;
 			background-color: $contact-list-background-hover;
 		}
@@ -61,5 +63,45 @@ $contact-list-background-active: $color-primary;
 				-webkit-box-orient: vertical;
 			}
 		}
+	}
+}
+
+// ------------ CHAT CONTAINER ------------ //
+
+.chat_container {
+	width: 100%;
+	height: 100%;
+
+	&__messages {
+		padding: .5rem;
+		margin: 0 auto;
+
+		height: 100%;
+		width: 100%;
+		max-width: 750px;
+
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: flex-start;
+		justify-content: flex-start;
+		gap: .25rem;
+	}
+}
+
+.chat_message {
+	padding: .5rem;
+
+	max-width: 350px;
+
+	border-radius: .5rem;
+	background-color: $contact-list-background-hover;
+
+	&-own {
+		margin-left: auto;
+		background-color: $contact-list-background-active;
+	}
+
+	&__content {
+
 	}
 }

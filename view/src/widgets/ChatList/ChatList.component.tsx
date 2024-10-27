@@ -5,8 +5,8 @@ import ChatListRenderComponent from "./ChatList.render"
 
 import { ChatListPresenter } from "./model/ChatList.presenter"
 import { ChatListData } from "./model/ChatList.data"
-import { IAbstractComponentProps } from "@shared/render_core/components/AbstractComponent"
-import { ReactComponent } from "@shared/render_core/components/ReactComponent"
+import { IAbstractComponentProps } from "@shared/Core/render_core/components/AbstractComponent"
+import { ReactComponent } from "@shared/Core/render_core/components/ReactComponent"
 import { ChatWindowState, IChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state"
 
 interface IChatListComponentPayload {

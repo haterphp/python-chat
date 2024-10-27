@@ -1,8 +1,8 @@
-import { ReactComponent } from "@shared/render_core/components/ReactComponent";
-import { IAbstractComponentProps, IComponentProps } from "@shared/render_core/components/AbstractComponent";
+import { ReactComponent } from "@shared/Core/render_core/components/ReactComponent";
+import { IAbstractComponentProps, IComponentProps } from "@shared/Core/render_core/components/AbstractComponent";
 import { FC } from "react";
 import { ChatWindowPresenter } from "./model/ChatWindow.presenter";
-import { ChatWindowState } from "./model/ChatWindow.state";
+import { ChatWindowState, IChatWindowState } from "./model/ChatWindow.state";
 import ChatWindowRenderComponent from "./ChatWindow.render";
 
 import ChatListComponent from "@widgets/ChatList/ChatList.component";
@@ -13,7 +13,7 @@ export interface IChatWindowComponentProps extends IComponentProps {
 	ChatComponent: ChatComponent
 }
 
-export default class ChatWindowComponent extends ReactComponent<ChatWindowPresenter, {}, ChatWindowState, any, IChatWindowComponentProps> {
+export default class ChatWindowComponent extends ReactComponent<ChatWindowPresenter, IChatWindowState, ChatWindowState, any, IChatWindowComponentProps> {
 
 	private __windowState: ChatWindowState
 
@@ -34,7 +34,7 @@ export default class ChatWindowComponent extends ReactComponent<ChatWindowPresen
 		}
 	}
 
-	protected _getRenderComponent(props: IAbstractComponentProps<{}, IChatWindowComponentProps>): FC {
+	protected _getRenderComponent(props: IAbstractComponentProps<IChatWindowState, IChatWindowComponentProps>): FC {
 		return ChatWindowRenderComponent(props)
 	}
 

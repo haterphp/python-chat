@@ -1,7 +1,7 @@
-import { ReactComponent } from "@shared/render_core/components/ReactComponent";
+import { ReactComponent } from "@shared/Core/render_core/components/ReactComponent";
 import SandboxPresenter from "./model/Sandbox.presenter";
 import SandboxState from "./model/Sandbox.state";
-import { IAbstractComponentProps } from "@shared/render_core/components/AbstractComponent";
+import { IAbstractComponentProps } from "@shared/Core/render_core/components/AbstractComponent";
 import { FC } from "react";
 import SandboxRenderComponent from './Sandbox.render'
 

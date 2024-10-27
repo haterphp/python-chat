@@ -1,7 +1,7 @@
 import { ChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state";
-import { EventEmitterSubsriber } from "@shared/common/ee/EventEmitterSubsriber";
+import { EventEmitterSubsriber } from "@shared/Core/common/ee/EventEmitterSubsriber";
 import { ChatListSubsribersEnum } from "./ChatListSubsribers.enum";
-import { ChatSchema } from "@widgets/ChatCommon/schemas/ChatSchema";
+import { ChatSchema } from "@shared/ChatCommon/schemas/ChatSchema";
 
 export class SetCurrentChatSubsriber extends EventEmitterSubsriber<ChatSchema['id']> {
 	public name: string = ChatListSubsribersEnum.SET_SELECTED_CHAT;

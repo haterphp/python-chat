@@ -1,6 +1,6 @@
 import { ChatWindowState, IChatWindowState } from "./ChatWindow.state";
-import { Presenter } from "@shared/render_core/Presenter";
-import { KeyCodes } from "@shared/enums/KeyCodes";
+import { Presenter } from "@shared/Core/render_core/Presenter";
+import { KeyCodes } from "@shared/Core/enums/KeyCodes";
 
 type Actions = 'setCurrentChat'
 

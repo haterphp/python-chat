@@ -1,18 +1,19 @@
 import { useLifeCycleComponent } from "@widgets/ReactRender/useLifeCycleComponent";
 import { useState } from "react";
 import ChatListitem from "./ui/ChatListItem.component";
-import { IAbstractComponentProps } from "@shared/render_core/components/AbstractComponent";
+import { IAbstractComponentProps } from "@shared/Core/render_core/components/AbstractComponent";
 import { IChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state";
-import { StateKeyChangesSubsriber } from "@shared/common/state/StateKeyChangesSubscriber";
-import { StateChangesSubsriber } from "@shared/common/state/StateChangesSubsriber";
+import { StateKeyChangesSubsriber } from "@shared/Core/common/state/StateKeyChangesSubscriber";
+import { StateChangesSubsriber } from "@shared/Core/common/state/StateChangesSubsriber";
 import { ChatListSubsribersEnum } from "./model/subsribers/ChatListSubsribers.enum";
-import { ChatSchema } from "@widgets/ChatCommon/schemas/ChatSchema";
+import { ChatSchema } from "@shared/ChatCommon/schemas/ChatSchema";
 
 export default function ChatListRenderComponent(props: IAbstractComponentProps<IChatWindowState, {}, ChatListSubsribersEnum>) {
 	return () => {
 		const { subscribeToStateChanges, subscribeToStateKeyChanges } = props
 
 		const [chatsList, setChatLists] = useState<IChatWindowState['chats']>([])
+		const [selectedChatId, setSelectedChatId] = useState<ChatSchema['id']>(-1)
 
 		useLifeCycleComponent(
 			props,
@@ -25,8 +26,15 @@ export default function ChatListRenderComponent(props: IAbstractComponentProps<I
 				subscribeToStateKeyChanges(
 					new StateKeyChangesSubsriber('chats', setChatLists)
 				)
+				subscribeToStateKeyChanges(
+					new StateKeyChangesSubsriber('selectedChat', onSelectedChat)
+				)
 			}
 		)
+
+		const onSelectedChat = (selectedChat: ChatSchema | null) => {
+			setSelectedChatId(selectedChat === null ? -1 : selectedChat.id)
+		}
 
 		const handleOnChatItemClick = (chatId: ChatSchema['id']) => {
 			props.emitAction(ChatListSubsribersEnum.SET_SELECTED_CHAT, chatId)
@@ -34,7 +42,14 @@ export default function ChatListRenderComponent(props: IAbstractComponentProps<I
 
 		return (
 			<div className="chats_list">
-				{chatsList.map((chat) => <ChatListitem key={chat.id} chat={chat} onClick={handleOnChatItemClick} />)}
+				{chatsList.map((chat) => (
+					<ChatListitem
+						key={chat.id}
+						chat={chat}
+						isSelected={selectedChatId === chat.id}
+						onClick={handleOnChatItemClick}
+					/>
+				))}
 			</div>
 		)
 	}

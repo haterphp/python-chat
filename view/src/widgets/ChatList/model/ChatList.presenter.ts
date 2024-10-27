@@ -1,4 +1,4 @@
-import { Presenter } from "../../../shared/render_core/Presenter";
+import { Presenter } from "../../../shared/Core/render_core/Presenter";
 
 import { ChatListData } from "./ChatList.data";
 import { ChatWindowState, IChatWindowState } from "@pages/ChatWindow/model/ChatWindow.state";

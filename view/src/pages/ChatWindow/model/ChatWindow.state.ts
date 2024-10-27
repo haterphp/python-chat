@@ -1,5 +1,5 @@
-import { ComponentState } from "@shared/render_core/states/ComponentState";
-import { ChatSchema } from "@widgets/ChatCommon/schemas/ChatSchema";
+import { ComponentState } from "@shared/Core/render_core/states/ComponentState";
+import { ChatSchema } from "@shared/ChatCommon/schemas/ChatSchema";
 
 export interface IChatWindowState {
 	selectedChat: ChatSchema | null
